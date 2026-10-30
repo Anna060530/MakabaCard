@@ -1,781 +1,278 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-t="cover">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Card Studio - 數位名片</title>
-
+<title>數位名片</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap">
 <style>
-:root{--bg:#f2f2f7;--fg:#1c1c1e;--bd:#e0e0e3;--mu:#6e6e73;--ac:#27316e;--acf:#fff;box-sizing:border-box}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121214;--fg:#f2f2f4;--bd:#2c2c2e;--mu:#9d9da4}}
-:root[data-theme="dark"]{--bg:#121214;--fg:#f2f2f4;--bd:#2c2c2e;--mu:#9d9da4}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,"PingFang TC","Noto Sans TC",sans-serif;transition:background .3s}
-#page{min-height:100vh;display:flex;justify-content:center;background:inherit}
-#card{width:100%;max-width:440px;min-height:100vh;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));position:relative;background:inherit;transition:background .3s}
+:root{--bg:#eef2f6;--fg:#14202e;--sf:#fff;--ac:#1f4e79;--acf:#fff;--ax:#1f4e79;--r:22px;--lr:16px;--hf:inherit;--ser:"Noto Serif TC","Songti TC",Georgia,serif;--mu:color-mix(in srgb,var(--fg) 62%,var(--bg));--bd:color-mix(in srgb,var(--fg) 13%,transparent);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark}}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-button{font-family:inherit}
-
-/* Header Bar */
-#tb{position:fixed;top:0;left:0;right:0;z-index:10;max-width:440px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;background:rgba(255,255,255,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.05);color:#1c1c1e;transition:all .3s}
-[data-theme="dark"] #tb,.t3 #tb,.t4 #tb,.t5 #tb,.t6 #tb{background:rgba(18,18,20,.75);color:#fff;border-bottom-color:rgba(255,255,255,.1)}
-.tbl{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
-#tba{width:34px;height:34px;border-radius:50%;overflow:hidden;background:rgba(0,0,0,.08);display:grid;place-items:center;font-weight:700;flex:none;font-size:14px}
-#tba img{width:100%;height:100%;object-fit:cover}
-#tbn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;font-weight:600}
-.pill{border:0;border-radius:20px;background:var(--ac);color:var(--acf);padding:7px 14px;font:600 13px inherit;cursor:pointer;transition:transform .15s}
-.pill:active{transform:scale(.95)}
-#tbm{width:36px;height:36px;border:0;border-radius:50%;background:rgba(0,0,0,.05);color:inherit;display:grid;place-items:center;cursor:pointer}
-[data-theme="dark"] #tbm{background:rgba(255,255,255,.1)}
-
-/* Menu Dropdown */
-#mbk{position:fixed;inset:0;z-index:15;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);pointer-events:none;opacity:0;transition:opacity .2s}
-#mbk:not([hidden]){pointer-events:auto;opacity:1}
-#menu{position:fixed;z-index:16;top:calc(60px + env(safe-area-inset-top,0px));right:max(16px,calc(50% - 204px));width:220px;background:#fff;color:#1c1c1e;border-radius:20px;padding:8px;box-shadow:0 12px 36px rgba(0,0,0,.18);transform-origin:top right;animation:pop .2s cubic-bezier(0.16, 1, 0.3, 1)}
-[data-theme="dark"] #menu{background:#222226;color:#f2f2f4}
-#menu button{display:flex;gap:12px;align-items:center;width:100%;border:0;background:none;padding:12px 14px;border-radius:14px;font:500 14px inherit;cursor:pointer;text-align:left;color:inherit}
-#menu button:active{background:rgba(0,0,0,.05)}
-[data-theme="dark"] #menu button:active{background:rgba(255,255,255,.08)}
-#menu span{width:20px;text-align:center;font-size:16px}
-@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-
-/* Bottom Action Bar */
-#bar{position:fixed;left:0;right:0;bottom:0;z-index:10;max-width:440px;margin:0 auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;background:linear-gradient(to top,var(--bg) 75%,transparent);pointer-events:none}
-#bar > *{pointer-events:auto}
-#vc{flex:1;border:0;border-radius:18px;padding:14px;background:var(--ac);color:var(--acf);font:700 15px inherit;cursor:pointer;box-shadow:0 8px 24px -4px rgba(0,0,0,.25);transition:transform .15s}
-#vc:active{transform:scale(.98)}
-#fab,#edb{width:50px;height:50px;border:0;border-radius:18px;background:#fff;color:#1c1c1e;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:grid;place-items:center;transition:transform .15s}
-[data-theme="dark"] #fab,[data-theme="dark"] #edb{background:#2a2a2e;color:#fff}
-#fab:active,#edb:active{transform:scale(.92)}
-
-/* Bottom Sheet Editor */
-#sheet{position:fixed;left:0;right:0;bottom:0;z-index:25;height:82vh;background:var(--bg);color:var(--fg);border-radius:28px 28px 0 0;max-width:500px;margin:0 auto;display:flex;flex-direction:column;transform:translateY(110%);visibility:hidden;transition:transform .3s cubic-bezier(0.16, 1, 0.3, 1),visibility 0s .3s;box-shadow:0 -10px 40px rgba(0,0,0,.3)}
-#sheet.open{transform:translateY(0);visibility:visible;transition:transform .3s cubic-bezier(0.16, 1, 0.3, 1)}
-.top{padding:12px 20px 0;flex:none}
-.grip{width:36px;height:5px;border-radius:3px;background:var(--bd);margin:0 auto 14px}
-.bar{display:flex;gap:10px;align-items:center}
-.seg{flex:1;display:flex;background:rgba(0,0,0,.06);border-radius:14px;padding:3px}
-[data-theme="dark"] .seg{background:rgba(255,255,255,.08)}
-.seg button{flex:1;border:0;background:transparent;border-radius:11px;padding:8px 4px;cursor:pointer;font:600 13px inherit;color:var(--mu);transition:all .2s}
-.seg button.on{background:#fff;color:#1c1c1e;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-[data-theme="dark"] .seg button.on{background:#2c2c30;color:#fff}
-#done{border:0;background:var(--ac);color:var(--acf);border-radius:14px;padding:9px 18px;font:700 14px inherit;cursor:pointer}
-#form{flex:1;overflow-y:auto;padding:16px 20px calc(40px + env(safe-area-inset-bottom,0px))}
-label{display:grid;gap:6px;font-size:13px;font-weight:500;color:var(--mu);margin-bottom:14px}
-input[type=text],input[type=url],textarea,select{width:100%;background:rgba(0,0,0,.03);color:var(--fg);border:1.5px solid var(--bd);border-radius:14px;padding:12px;font:inherit;outline:none;transition:border-color .2s}
-[data-theme="dark"] input[type=text],[data-theme="dark"] input[type=url],[data-theme="dark"] textarea,[data-theme="dark"] select{background:rgba(255,255,255,.05)}
-input:focus,textarea:focus,select:focus{border-color:var(--ac)}
-textarea{min-height:80px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item{background:rgba(0,0,0,.02);border:1.5px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:14px}
-[data-theme="dark"] .item{background:rgba(255,255,255,.03)}
-.gb{background:none;color:var(--fg);border:1.5px solid var(--bd);border-radius:12px;padding:8px 14px;cursor:pointer;font:500 13px inherit;display:inline-flex;align-items:center;gap:6px}
-.gb.on{border-color:var(--ac);color:var(--ac)}
-
-/* Template Picker Miniatures */
-.tp{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.tp button{border:2px solid var(--bd);border-radius:16px;background:rgba(0,0,0,.02);color:var(--fg);padding:10px 6px;cursor:pointer;font:600 12px inherit;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .2s}
-[data-theme="dark"] .tp button{background:rgba(255,255,255,.03)}
-.tp button.on{border-color:var(--ac);background:rgba(39,49,110,.06)}
-.tp-mini{width:100%;aspect-ratio:9/16;max-height:100px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);position:relative;background:#fff}
-
-/* Color Swatches */
-.sw{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-.sw button{width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;transition:transform .15s;position:relative}
-.sw button.on{outline:3px solid var(--ac);outline-offset:2px;transform:scale(1.05)}
-
-/* Modal & Toast */
-#modal{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px;pointer-events:none;opacity:0;transition:opacity .2s}
-#modal:not([hidden]){pointer-events:auto;opacity:1}
-.md{background:#fff;color:#1c1c1e;border-radius:28px;padding:24px;max-width:340px;width:100%;text-align:center;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-[data-theme="dark"] .md{background:#222226;color:#fff}
-#mx{position:absolute;top:12px;right:12px;border:0;background:none;font-size:20px;width:36px;height:36px;cursor:pointer;color:var(--mu)}
-.toast{position:fixed;left:50%;top:calc(20px + env(safe-area-inset-top,0px));transform:translateX(-50%) translateY(-20px);background:#1c1c1e;color:#fff;padding:10px 20px;border-radius:30px;font-weight:600;font-size:14px;opacity:0;transition:all .25s cubic-bezier(0.16, 1, 0.3, 1);pointer-events:none;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* Dynamic Section Component Styling */
-.sec-item{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.03);border:1.5px solid var(--bd);border-radius:14px;padding:10px 12px;margin-bottom:8px}
-[data-theme="dark"] .sec-item{background:rgba(255,255,255,.04)}
-.sec-item b{flex:1;font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* =========================================================
-   TEMPLATE LAYOUTS (t1 ~ t9)
-   ========================================================= */
-
-/* Commons */
-.hero-img{width:100%;height:100%;object-fit:cover;object-position:50% var(--fy,50%)}
-.av-img{object-fit:cover;object-position:50% var(--ay,50%);border-radius:inherit}
-.lg-img{object-fit:contain}
-.bio-text{white-space:pre-wrap;margin:0}
-.ct-list{display:grid;gap:10px}
-.ct-list a,.ct-list span{display:flex;align-items:center;gap:12px;font-size:14px}
-.ct-list svg{flex:none;opacity:.75}
-
-/* Theme 1: 沉浸大圖 (Immersion Visual) */
-.t1{background:var(--bg)}
-.t1 .hero-wrap{height:360px;position:relative;background:var(--ac)}
-.t1 .hero-wrap:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg))}
-.t1 .card-body{margin-top:-60px;position:relative;z-index:2;padding:0 20px 20px;display:grid;gap:20px}
-.t1 .profile-card{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.08);display:flex;gap:16px;align-items:center}
-[data-theme="dark"] .t1 .profile-card{background:rgba(30,30,34,.85);box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.t1 .av{width:76px;height:76px;border-radius:20px;overflow:hidden;flex:none;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-size:28px;font-weight:700}
-
-/* Theme 2: 雙色拼接 (Split Header) */
-.t2{background:var(--bg)}
-.t2 .header-bg{height:160px;background:var(--ac);position:relative}
-.t2 .card-body{padding:0 20px 20px;margin-top:-50px;display:grid;gap:20px}
-.t2 .av{width:100px;height:100px;border-radius:50%;border:4px solid var(--bg);overflow:hidden;background:#fff;color:var(--ac);display:grid;place-items:center;font-size:36px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.1)}
-
-/* Theme 3: 精品雙框 (Luxury Frame) */
-.t3{background:#161618;color:#f0f0f2}
-.t3 #card{padding:80px 20px 100px}
-.t3 .frame-box{border:1px solid rgba(212,175,55,.4);padding:24px;border-radius:4px;position:relative;display:grid;gap:20px;background:rgba(255,255,255,.02)}
-.t3 .frame-box:before{content:"";position:absolute;inset:4px;border:1px solid rgba(212,175,55,.2);pointer-events:none}
-.t3 .gold-title{color:#d4af37;font-family:serif;letter-spacing:1px}
-
-/* Theme 4: 深色玻璃 (Glassmorphism) */
-.t4{background:linear-gradient(135deg,#0f172a,#1e1b4b,#311042);color:#fff;min-height:100vh}
-.t4 #card{padding:80px 20px 100px;display:grid;gap:16px}
-.t4 .glass-panel{background:rgba(255,255,255,.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:20px}
-
-/* Theme 5: 極簡置中 (Modern Centered) */
-.t5{background:#fafaf9;color:#1c1917}
-[data-theme="dark"] .t5{background:#1c1917;color:#fafaf9}
-.t5 #card{padding:90px 24px 100px;text-align:center;display:grid;gap:24px;justify-items:center}
-.t5 .av{width:110px;height:110px;border-radius:40px;overflow:hidden;margin:0 auto;box-shadow:0 12px 28px rgba(0,0,0,.08)}
-
-/* Theme 6: 科技暗黑 (Cyberpunk Dark) */
-.t6{background:#0a0d14;color:#00ffcc;font-family:monospace}
-.t6 #card{padding:80px 20px 100px;display:grid;gap:16px}
-.t6 .cyber-card{border:1px solid #00ffcc;background:rgba(0,255,204,.03);padding:18px;border-radius:12px;box-shadow:0 0 15px rgba(0,255,204,.1)}
-.t6 a,.t6 button{color:#00ffcc!important}
-
-/* Theme 7: 專業商務 (Executive Card) */
-.t7{background:#f4f5f7}
-[data-theme="dark"] .t7{background:#18191c}
-.t7 #card{padding:80px 20px 100px;display:grid;gap:16px}
-.t7 .biz-card{background:var(--ac);color:var(--acf);border-radius:20px;padding:24px;box-shadow:0 12px 32px rgba(0,0,0,.15);display:grid;gap:12px}
-
-/* Theme 8: 馬卡龍柔和 (Pastel Soft) */
-.t8{background:#fdf6f6;color:#4a3e3e}
-.t8 #card{padding:80px 20px 100px;display:grid;gap:18px}
-.t8 .soft-box{background:#fff;border-radius:24px;padding:20px;box-shadow:0 8px 24px rgba(230,200,200,.25)}
-
-/* Theme 9: 空白 (Blank Canvas) */
-.t9{background:var(--bg)}
-.t9 #card{padding:80px 20px 100px;display:grid;gap:16px}
-
-/* Buttons / Links Styles */
-.btn-list{display:grid;gap:12px}
-.btn-item{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.9);border-radius:16px;padding:14px 16px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .15s}
-[data-theme="dark"] .btn-item{background:rgba(255,255,255,.06);box-shadow:none}
-.btn-item:active{transform:scale(.98)}
-.btn-icon{width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.05);display:grid;place-items:center;font-size:18px;flex:none}
-[data-theme="dark"] .btn-icon{background:rgba(255,255,255,.1)}
-.btn-icon img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
-
-/* Shape variants for links */
-.shape-pill .btn-item{border-radius:999px}
-.shape-square .btn-item{border-radius:8px}
-
-.box-card{background:rgba(255,255,255,.8);border-radius:18px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.03)}
-[data-theme="dark"] .box-card{background:rgba(255,255,255,.05)}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h3,p{margin:0}
+h1,h3{font-family:var(--hf)}
+#card{width:100%;max-width:480px;margin:0 auto;padding-bottom:112px;overflow-x:hidden}
+.cv{display:none}
+.who{display:flex;gap:16px;align-items:center;padding:30px 20px 6px}
+.av{flex:none;width:88px;height:88px;border-radius:50%;overflow:hidden;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-size:32px;font-weight:700}
+.av img{width:100%;height:100%;object-fit:cover}
+h1{font-size:27px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+.ti{margin-top:3px;overflow-wrap:anywhere}
+.co{margin-top:2px;font-size:13px;font-weight:600;color:var(--ax)}
+.secs{display:grid;gap:14px;padding:16px 20px 0}
+.box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
+.box h3{font-size:16px;margin-bottom:6px}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.mu{color:var(--mu);font-size:13px}
+.links{display:grid;gap:10px}
+.lk{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 16px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--lr);font-weight:600}
+.lk:active{transform:scale(.985)}
+.lk i{flex:none;width:34px;height:34px;border-radius:calc(var(--lr)*.6);background:color-mix(in srgb,var(--ax) 14%,transparent);display:grid;place-items:center;font-style:normal;overflow:hidden}
+.lk i img{width:100%;height:100%;object-fit:cover}
+.lk span{flex:1;overflow-wrap:anywhere}
+.lk b{opacity:.4;font-weight:400}
+.ct{display:grid;gap:12px}
+.ct a,.ct div{display:flex;gap:12px;align-items:flex-start;overflow-wrap:anywhere}
+.ct svg{flex:none;margin-top:3px;color:var(--ax)}
+.ft{display:flex;gap:14px;align-items:center}
+.ft img{max-height:40px;max-width:96px;object-fit:contain}
+/* 沉浸 */
+[data-t="cover"] .cv{display:block;height:250px;background:radial-gradient(90% 70% at 85% 0,color-mix(in srgb,var(--ac),#fff 30%),transparent 70%),linear-gradient(165deg,var(--ac),color-mix(in srgb,var(--ac),#000 50%)) center/cover;background-position:50% var(--fy,50%)}
+[data-t="cover"] .who{margin-top:-52px;align-items:flex-end}
+[data-t="cover"] .av{width:100px;height:100px;border-radius:30px;border:4px solid var(--bg)}
+/* 簡約 */
+[data-t="clean"] .who{flex-direction:column;text-align:center;padding-top:44px;gap:16px}
+[data-t="clean"] .av{width:112px;height:112px}
+[data-t="clean"] h1{font-size:30px;font-weight:600;letter-spacing:.06em}
+[data-t="clean"] .box{background:none;border-width:0 0 1px;border-radius:0;padding:16px 0}
+[data-t="clean"] .lk{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+[data-t="clean"] .lk i{background:color-mix(in srgb,var(--bg) 18%,transparent)}
+/* 商務 */
+[data-t="biz"] .hd{background:var(--ac);color:var(--acf);border-radius:0 0 34px 34px;padding-bottom:26px}
+[data-t="biz"] .co{color:var(--acf);opacity:.78}
+[data-t="biz"] .av{width:72px;height:72px;border-radius:20px;background:var(--acf);color:var(--ac)}
+[data-t="biz"] .box{border-width:0 0 0 4px;border-left-color:var(--ac);box-shadow:0 2px 14px rgba(0,0,0,.06)}
+/* 夜光 */
+:root[data-t="night"] body{background:radial-gradient(120% 45% at 50% 0,color-mix(in srgb,var(--ac),transparent 55%),transparent) var(--bg)}
+[data-t="night"] .av{width:96px;height:96px;box-shadow:0 0 0 3px var(--ax),0 0 34px color-mix(in srgb,var(--ac),transparent 40%)}
+[data-t="night"] .box,[data-t="night"] .lk{background:color-mix(in srgb,var(--sf) 70%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+/* 柔和 */
+[data-t="soft"] .av{border-radius:34% 66% 58% 42%/46% 40% 60% 54%;width:96px;height:96px}
+[data-t="soft"] .box,[data-t="soft"] .lk{border-color:transparent;box-shadow:0 6px 22px color-mix(in srgb,var(--ac),transparent 82%)}
+/* 雜誌 */
+[data-t="mag"] .who{flex-direction:row-reverse;justify-content:space-between;align-items:flex-end;padding:40px 0 18px;margin:0 20px;border-bottom:2px solid var(--fg)}
+[data-t="mag"] .av{width:112px;height:142px;border-radius:var(--r)}
+[data-t="mag"] h1{font-size:40px;line-height:1.05;font-weight:900}
+[data-t="mag"] .box{background:none;border-width:0 0 1px;border-radius:0;padding:14px 0}
+[data-t="mag"] .lk{background:none;border-width:0 0 1px;border-radius:0;padding-left:0;padding-right:0}
+/* 底部列 */
+#bar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;z-index:10;width:100%;max-width:480px;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;background:linear-gradient(to top,var(--bg) 70%,transparent);pointer-events:none}
+#bar>*{pointer-events:auto}
+.pri{flex:1;min-height:50px;border:0;border-radius:16px;background:var(--ac);color:var(--acf);font-weight:700;cursor:pointer;box-shadow:0 8px 22px -6px rgba(0,0,0,.35)}
+.ic{flex:none;width:50px;height:50px;border:1px solid var(--bd);border-radius:16px;background:var(--sf);color:var(--fg);cursor:pointer;font-size:18px;display:grid;place-items:center}
+.pri:active,.ic:active{transform:scale(.96)}
+/* 編輯面板（固定中性配色，不受名片配色影響） */
+#sheet{--bg:#f4f5f7;--fg:#16181d;--sf:#fff;--bd:#e0e2e7;--mu:#6a6f7a;--sa:#2b45f0;position:fixed;left:0;right:0;bottom:0;margin:0 auto;z-index:20;width:100%;max-width:480px;height:86%;height:min(86dvh,760px);background:var(--bg);color:var(--fg);border-radius:26px 26px 0 0;display:flex;flex-direction:column;overflow:hidden;transform:translateY(110%);visibility:hidden;transition:transform .3s,visibility 0s .3s;box-shadow:0 -12px 40px rgba(0,0,0,.3)}
+#sheet.open{transform:none;visibility:visible;transition:transform .3s}
+.top{flex:none;display:flex;gap:10px;align-items:center;padding:16px 16px 10px}
+.seg{flex:1;display:flex;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:3px}
+.seg button{flex:1;border:0;background:none;border-radius:11px;padding:8px 2px;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--sa);color:#fff}
+#done{flex:none;border:0;background:var(--sa);color:#fff;border-radius:14px;padding:10px 16px;font-weight:700;cursor:pointer}
+#form{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+label{display:grid;gap:5px;font-size:13px;color:var(--mu);margin-bottom:12px}
+input[type=text],input[type=url],textarea,select{width:100%;background:var(--sf);border:1.5px solid var(--bd);border-radius:12px;padding:11px 12px;font-size:16px;color:var(--fg);outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--sa)}
+input[type=file]{width:100%;font-size:13px}
+input[type=range]{width:100%;accent-color:var(--sa)}
+input[type=color]{width:100%;height:44px;padding:3px;border:1.5px solid var(--bd);border-radius:12px;background:var(--sf);cursor:pointer}
+textarea{min-height:84px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.it{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:12px}
+.gb{background:var(--sf);border:1.5px solid var(--bd);border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;color:var(--fg)}
+.gb.on{border-color:var(--sa);color:var(--sa)}
+.gb.del{color:#e5484d}
+.fl{display:flex;gap:8px;flex-wrap:wrap}
+h4{margin:20px 0 10px;font-size:14px}
+h4:first-child{margin-top:4px}
+.tp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tp button{border:2px solid var(--bd);border-radius:14px;background:var(--sf);padding:8px 4px;cursor:pointer;font-size:12px;font-weight:600;color:var(--fg);display:grid;gap:6px;justify-items:center}
+.tp button.on{border-color:var(--sa)}
+.tp svg{width:100%;max-width:56px;height:auto;border-radius:6px}
+.sw{display:flex;flex-wrap:wrap;gap:10px}
+.sw button{width:42px;height:42px;border-radius:50%;border:2px solid var(--bd);cursor:pointer}
+#modal{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:20px}
+#modal[hidden]{display:none}
+.md{position:relative;background:#fff;color:#16181d;border-radius:24px;padding:28px 24px 22px;max-width:320px;width:100%;text-align:center}
+#mx{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;font-size:20px;cursor:pointer;color:#6a6f7a}
+#qrb{display:flex;justify-content:center;margin:6px 0 14px}
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);background:#1c1c1e;color:#fff;padding:10px 18px;border-radius:30px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:40;max-width:90%}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
-
-<div id="page">
-  <div id="card"></div>
-</div>
-
-<!-- Header -->
-<header id="tb">
-  <div class="tbl">
-    <span id="tba"></span>
-    <b id="tbn">CARD STUDIO</b>
-  </div>
-  <button class="pill" id="tbs">前往網站</button>
-  <button id="tbm" aria-label="開啟選單">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-  </button>
-</header>
-
-<!-- Menu Overlay -->
-<div id="mbk" hidden></div>
-<nav id="menu" hidden>
-  <button data-m="qr"><span>▦</span>掃描 QR Code</button>
-  <button data-m="img"><span>🖼</span>儲存名片圖片</button>
-  <button data-m="share"><span>⤴</span>分享名片</button>
-  <button data-m="vc"><span>👤</span>儲存聯絡人 (vCard)</button>
-  <button data-m="ed"><span>✎</span>編輯 Card Studio</button>
-</nav>
-
-<!-- Modal -->
-<div id="modal" hidden>
-  <div class="md">
-    <button id="mx" aria-label="關閉">✕</button>
-    <div id="mbody"></div>
-  </div>
-</div>
-
-<!-- Bottom Action Bar -->
+<main id="card"></main>
 <div id="bar">
-  <button id="vc">儲存聯絡人</button>
-  <button id="fab" aria-label="分享名片">⤴</button>
-  <button id="edb" aria-label="編輯">✎</button>
+  <button class="pri" id="vc">儲存聯絡人</button>
+  <button class="ic" id="qr" aria-label="QR Code">▦</button>
+  <button class="ic" id="sh" aria-label="分享名片">⤴</button>
+  <button class="ic" id="ed" aria-label="編輯">✎</button>
 </div>
-
-<!-- Bottom Sheet Editor Drawer -->
 <div id="sheet" role="dialog" aria-label="編輯名片">
-  <div class="top">
-    <div class="grip"></div>
-    <div class="bar">
-      <div class="seg" id="seg"></div>
-      <button id="done">完成</button>
-    </div>
-  </div>
+  <div class="top"><div class="seg" id="seg"></div><button id="done">完成</button></div>
   <div id="form"></div>
 </div>
-
+<div id="modal" hidden><div class="md"><button id="mx" aria-label="關閉">✕</button><div id="mb"></div></div></div>
 <div class="toast" id="toast"></div>
-
-<!-- External Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <script>
-const KEY = 'card_studio_v5_store';
+const KEY='card_studio_v7';
+const TYPES={line:['LINE','💬'],ig:['Instagram','📷'],fb:['Facebook','👍'],threads:['Threads','@'],yt:['YouTube','▶'],linkedin:['LinkedIn','💼'],x:['X','𝕏'],github:['GitHub','💻'],tg:['Telegram','✈️'],tel:['電話','📞'],mail:['Email','✉️'],site:['網站','🌐'],other:['連結','🔗']};
+const TPL={
+cover:{n:'沉浸大圖',rad:22,font:'sans',p:{bg:'#eef2f6',sf:'#ffffff',fg:'#14202e',ac:'#1f4e79'}},
+clean:{n:'簡約置中',rad:14,font:'sans',p:{bg:'#ffffff',sf:'#ffffff',fg:'#111111',ac:'#111111'}},
+biz:{n:'商務色塊',rad:12,font:'sans',p:{bg:'#f1f2f5',sf:'#ffffff',fg:'#14213d',ac:'#14213d'}},
+night:{n:'夜光玻璃',rad:22,font:'sans',p:{bg:'#0b0d1a',sf:'#171a2e',fg:'#eef0ff',ac:'#7c83ff'}},
+soft:{n:'柔和暖調',rad:30,font:'serif',p:{bg:'#fbeee9',sf:'#ffffff',fg:'#4a3436',ac:'#c4627a'}},
+mag:{n:'雜誌編輯',rad:4,font:'serif',p:{bg:'#eef1ea',sf:'#fafbf8',fg:'#1d2b24',ac:'#2f5d4e'}}};
+const PRESETS=[['#eef2f6','#ffffff','#14202e','#1f4e79'],['#ffffff','#ffffff','#111111','#111111'],['#0b0d1a','#171a2e','#eef0ff','#7c83ff'],['#fbeee9','#ffffff','#4a3436','#c4627a'],['#eef1ea','#fafbf8','#1d2b24','#2f5d4e'],['#f6f1e7','#fffdf8','#2a2118','#a0682b'],['#101010','#1c1c1c','#f5f5f5','#e8c468'],['#e9f0ff','#ffffff','#10204a','#2b45f0']];
+function mini(k){const p=TPL[k].p,b=`<rect width="36" height="44" fill="${p.bg}"/>`,c=(y)=>`<rect x="4" y="${y}" width="28" height="5" rx="2.5" fill="${p.sf}" stroke="${p.fg}" stroke-opacity=".15" stroke-width=".5"/>`;
+const m={cover:b+`<rect width="36" height="17" fill="${p.ac}"/><rect x="4" y="11" width="10" height="10" rx="3" fill="${p.fg}" opacity=".55"/>`+c(26)+c(34),
+clean:b+`<circle cx="18" cy="11" r="6" fill="${p.fg}" opacity=".6"/><rect x="10" y="20" width="16" height="3" rx="1.5" fill="${p.fg}"/><rect x="5" y="28" width="26" height="5" rx="2.5" fill="${p.fg}"/><rect x="5" y="36" width="26" height="5" rx="2.5" fill="${p.fg}"/>`,
+biz:b+`<path d="M0 0h36v21q0 4-4 4H4q-4 0-4-4z" fill="${p.ac}"/><rect x="4" y="6" width="9" height="9" rx="2.5" fill="#fff"/>`+c(30)+c(37),
+night:`<rect width="36" height="44" fill="${p.bg}"/><circle cx="18" cy="0" r="17" fill="${p.ac}" opacity=".5"/><circle cx="9" cy="13" r="5" fill="${p.ac}"/><rect x="4" y="25" width="28" height="6" rx="3" fill="#fff" opacity=".14"/><rect x="4" y="34" width="28" height="6" rx="3" fill="#fff" opacity=".14"/>`,
+soft:b+`<path d="M5 12q0-8 8-6t3 8-9 4q-2-2-2-6z" fill="${p.ac}"/>`+c(25)+c(34),
+mag:b+`<rect x="21" y="5" width="11" height="14" fill="${p.ac}"/><rect x="4" y="8" width="14" height="5" fill="${p.fg}"/><rect x="4" y="21" width="28" height="1.5" fill="${p.fg}"/><rect x="4" y="27" width="28" height="1" fill="${p.fg}" opacity=".4"/><rect x="4" y="33" width="28" height="1" fill="${p.fg}" opacity=".4"/><rect x="4" y="39" width="28" height="1" fill="${p.fg}" opacity=".4"/>`};
+return `<svg viewBox="0 0 36 44">${m[k]}</svg>`}
+const DEF=()=>({tpl:'cover',c:{...TPL.cover.p},rad:22,font:'sans',shape:'rounded',fy:50,ay:50,
+name:'林小安',title:'品牌設計總監',company:'CARD STUDIO',tag:'打造數位形象與品牌頁面',
+bio:'嗨，我是小安。專注協助個人與企業建立有質感的數位名片與一頁式品牌頁面。',
+phone:'0912-345-678',email:'hello@cardstudio.design',addr:'台北市信義區忠孝東路五段 88 號',taxId:'88888888',site:'https://cardstudio.design',
+avatar:'',logo:'',bg:'',
+links:[{type:'line',label:'官方 LINE 帳號',url:'',icon:''},{type:'ig',label:'Instagram 作品集',url:'',icon:''},{type:'site',label:'預約品牌諮詢',url:'https://cardstudio.design',icon:''}],
+extras:[{title:'服務項目',body:'・品牌數位名片設計\n・UI／UX 視覺規劃\n・一頁式 RWD 網站開發'}]});
+let S=DEF(),tab=0;
+try{const o=JSON.parse(localStorage.getItem(KEY)||'{}');Object.assign(S,o);S.c={...TPL[S.tpl].p,...(o.c||{})}}catch(e){}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('儲存空間不足，請換較小的圖片')}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2000)}
+function href(l){const u=(l.url||'').trim();if(!u||u==='#')return'#';if(l.type==='tel')return'tel:'+u;if(l.type==='mail')return'mailto:'+u;return/^https?:\/\//i.test(u)?u:'https://'+u.replace(/^[a-z]+:\/*/i,'')}
+const ico=p=>`<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const IC={ph:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',ml:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>',mp:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',gl:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>'};
+const lum=h=>{const n=parseInt(h.slice(1),16);const c=[n>>16,n>>8&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const cr=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
 
-const TYPES = {
-  line:['LINE','💬'], ig:['Instagram','📷'], fb:['Facebook','👍'],
-  threads:['Threads','@'], yt:['YouTube','▶'], linkedin:['LinkedIn','💼'],
-  x:['X (Twitter)','🐦'], github:['GitHub','💻'], tg:['Telegram','✈️'],
-  tel:['電話','📞'], mail:['Email','✉️'], site:['網站','🌐'], other:['連結','🔗']
-};
-
-const TEMPLATES = {
-  t1: '沉浸大圖',
-  t2: '雙色拼接',
-  t3: '精品雙框',
-  t4: '深色玻璃',
-  t5: '極簡置中',
-  t6: '科技暗黑',
-  t7: '專業商務',
-  t8: '馬卡龍柔和',
-  t9: '空白'
-};
-
-const DEF = () => ({
-  tpl: 't1',
-  btnShape: 'rounded', // rounded, pill, square
-  name: '林小安',
-  title: '品牌設計總監',
-  company: 'CARD STUDIO',
-  tag: '打造數位形象與品牌頁面',
-  bio: '嗨！我是小安。專注於協助個人與企業建立高質感的數位名片與一頁式品牌頁面。',
-  phone: '0912-345-678',
-  email: 'hello@cardstudio.design',
-  addr: '台北市信義區忠孝東路五段 88 號',
-  taxId: '88888888',
-  site: 'https://cardstudio.design',
-  avatar: '',
-  logo: '',
-  bg: '',
-  ay: 50,
-  fy: 50,
-  ac: '#27316e',
-  mode: 'light',
-  order: ['profile', 'bio', 'contact', 'links', 'extras', 'company'],
-  hide: {},
-  links: [
-    { type: 'line', label: '官方 LINE 帳號', url: '#', icon: '' },
-    { type: 'ig', label: 'Instagram 作品集', url: '#', icon: '' },
-    { type: 'site', label: '預約品牌諮詢', url: '#', icon: '' }
-  ],
-  extras: [
-    { title: '服務項目', body: '• 品牌數位名片設計\n• UI/UX 視覺規劃\n• 一頁式 RWD 網站開發' }
-  ]
-});
-
-let S;
-try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); }
-catch(e) { S = DEF(); }
-
-let tab = 0;
-const $ = s => document.querySelector(s);
-const esc = s => String(s??'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-const save = () => {
-  try { localStorage.setItem(KEY, JSON.stringify(S)); }
-  catch(e) { toast('儲存容量已滿，請壓縮上傳圖片'); }
-};
-
-function toast(msg) {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toast.h);
-  toast.h = setTimeout(() => t.classList.remove('show'), 2000);
+function colors(){
+  const c=S.c,r=document.documentElement;
+  r.dataset.t=S.tpl;
+  ['bg','fg','sf','ac'].forEach(k=>r.style.setProperty('--'+k,c[k]));
+  r.style.setProperty('--acf',cr(c.ac,'#ffffff')>=cr(c.ac,'#111111')?'#ffffff':'#111111');
+  r.style.setProperty('--ax',cr(c.ac,c.sf)>=3?c.ac:c.fg);
+  r.style.setProperty('--r',S.rad+'px');
+  r.style.setProperty('--lr',S.shape==='pill'?'999px':S.shape==='square'?'4px':Math.min(S.rad,18)+'px');
+  r.style.setProperty('--hf',S.font==='serif'?'var(--ser)':'inherit');
+  r.style.setProperty('--fy',S.fy+'%');
+}
+function render(){
+  colors();
+  document.title=(S.name||'數位名片')+' 的數位名片';
+  const av=S.avatar?`<img src="${esc(S.avatar)}" style="object-position:50% ${+S.ay}%" alt="">`:esc((S.name||'?').trim()[0]||'?');
+  const cv=S.bg?`<div class="cv" style="background-image:url('${esc(S.bg)}')"></div>`:'<div class="cv"></div>';
+  const ct=[S.phone&&`<a href="tel:${esc(S.phone)}">${ico(IC.ph)}<span>${esc(S.phone)}</span></a>`,S.email&&`<a href="mailto:${esc(S.email)}">${ico(IC.ml)}<span>${esc(S.email)}</span></a>`,S.site&&`<a href="${esc(href({url:S.site}))}" target="_blank" rel="noopener">${ico(IC.gl)}<span>${esc(S.site.replace(/^https?:\/\//,''))}</span></a>`,S.addr&&`<div>${ico(IC.mp)}<span>${esc(S.addr)}</span></div>`].filter(Boolean).join('');
+  $('#card').innerHTML=`
+  <header class="hd">${cv}<div class="who"><div class="av">${av}</div><div class="nm"><h1>${esc(S.name)}</h1><p class="ti">${esc(S.title)}</p>${S.company?`<p class="co">${esc(S.company)}</p>`:''}</div></div></header>
+  <div class="secs">
+    ${S.bio?`<section class="box"><p class="pre">${esc(S.bio)}</p></section>`:''}
+    ${S.links.length?`<nav class="links">${S.links.map(l=>`<a class="lk" href="${esc(href(l))}" target="_blank" rel="noopener"><i>${l.icon?`<img src="${esc(l.icon)}" alt="">`:TYPES[l.type][1]}</i><span>${esc(l.label||TYPES[l.type][0])}</span><b>›</b></a>`).join('')}</nav>`:''}
+    ${ct?`<section class="box ct">${ct}</section>`:''}
+    ${S.extras.map(e=>`<section class="box"><h3>${esc(e.title)}</h3><p class="pre">${esc(e.body)}</p></section>`).join('')}
+    ${(S.company||S.taxId||S.logo)?`<section class="box ft">${S.logo?`<img src="${esc(S.logo)}" alt="">`:''}<div><b>${esc(S.company)}</b>${S.tag?`<p class="mu">${esc(S.tag)}</p>`:''}${S.taxId?`<p class="mu">統一編號 ${esc(S.taxId)}</p>`:''}</div></section>`:''}
+  </div>`;
 }
 
-function getHref(l) {
-  const u = (l.url || '').trim();
-  if(!u) return '#';
-  if(l.type === 'tel') return 'tel:' + u;
-  if(l.type === 'mail') return 'mailto:' + u;
-  return /^https?:/.test(u) ? u : 'https://' + u;
+function form(){
+  $('#seg').innerHTML=['內容','連結與區塊','版型與配色'].map((x,i)=>`<button data-tab="${i}" class="${tab===i?'on':''}">${x}</button>`).join('');
+  const inp=(l,p,v,t='text')=>`<label>${l}<input type="${t}" data-p="${p}" value="${esc(v)}"></label>`;
+  const img=(l,p,v)=>`<label>${l}<input type="file" accept="image/*" data-img="${p}">${v?`<span><button class="gb" data-rm="${p}">移除圖片</button></span>`:''}</label>`;
+  const rng=(l,p,v,mx=100)=>`<label>${l}<input type="range" data-p="${p}" min="0" max="${mx}" value="${+v}"></label>`;
+  const col=(l,k)=>`<label>${l}<input type="color" data-c="${k}" value="${S.c[k]}"></label>`;
+  let h='';
+  if(tab===0)h=`${inp('姓名','name',S.name)}${inp('職稱','title',S.title)}${inp('公司／品牌','company',S.company)}${inp('一句話簡介','tag',S.tag)}
+  <label>個人簡介<textarea data-p="bio">${esc(S.bio)}</textarea></label>
+  ${inp('電話','phone',S.phone)}${inp('Email','email',S.email)}${inp('地址','addr',S.addr)}${inp('統一編號','taxId',S.taxId)}${inp('網站','site',S.site,'url')}
+  ${img('頭像','avatar',S.avatar)}${S.avatar?rng('頭像上下位置','ay',S.ay):''}
+  ${img('品牌 LOGO','logo',S.logo)}${img('封面圖（沉浸大圖版型使用）','bg',S.bg)}${S.bg?rng('封面上下位置','fy',S.fy):''}`;
+  else if(tab===1)h=`<h4>連結按鈕</h4>${S.links.map((l,i)=>`<div class="it"><label>類型<select data-p="links.${i}.type">${Object.entries(TYPES).map(([k,v])=>`<option value="${k}"${l.type===k?' selected':''}>${v[0]}</option>`).join('')}</select></label>${inp('名稱',`links.${i}.label`,l.label)}${inp('網址／號碼',`links.${i}.url`,l.url)}
+  ${img('自訂圖示',`links.${i}.icon`,l.icon)}<div class="fl"><button class="gb" data-lm="${i},-1">↑ 上移</button><button class="gb" data-lm="${i},1">↓ 下移</button><button class="gb del" data-dl="links,${i}">刪除</button></div></div>`).join('')}
+  <button class="gb" data-add="links" style="width:100%">＋ 新增連結</button>
+  <h4>圖文區塊</h4>${S.extras.map((e,i)=>`<div class="it">${inp('標題',`extras.${i}.title`,e.title)}<label>內容<textarea data-p="extras.${i}.body">${esc(e.body)}</textarea></label><button class="gb del" data-dl="extras,${i}">刪除區塊</button></div>`).join('')}
+  <button class="gb" data-add="extras" style="width:100%">＋ 新增區塊</button>`;
+  else h=`<h4>版型（切換時會套用該版型的預設配色）</h4><div class="tp">${Object.entries(TPL).map(([k,v])=>`<button data-tpl="${k}" class="${S.tpl===k?'on':''}">${mini(k)}${v.n}</button>`).join('')}</div>
+  <h4>配色方案</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-pre="${i}" aria-label="配色 ${i+1}" style="background:linear-gradient(135deg,${p[0]} 50%,${p[3]} 50%)"></button>`).join('')}</div>
+  <h4>自訂顏色</h4><div class="row">${col('背景色','bg')}${col('卡片色','sf')}${col('文字色','fg')}${col('主題色（按鈕、重點）','ac')}</div>
+  <h4>標題字體</h4><div class="fl">${[['sans','黑體'],['serif','明體']].map(([k,v])=>`<button class="gb${S.font===k?' on':''}" data-font="${k}">${v}</button>`).join('')}</div>
+  <h4>按鈕形狀</h4><div class="fl">${[['rounded','圓角'],['pill','膠囊'],['square','方角']].map(([k,v])=>`<button class="gb${S.shape===k?' on':''}" data-shape="${k}">${v}</button>`).join('')}</div>
+  <h4></h4>${rng('卡片圓角','rad',S.rad,36)}
+  <button class="gb del" id="rs" style="width:100%;margin-top:8px">重設為範例名片</button>`;
+  $('#form').innerHTML=h;
 }
+function walk(path){const k=path.split('.');let o=S;k.slice(0,-1).forEach(x=>o=o[x]);return[o,k.at(-1)]}
 
-/* Dynamic SVG Icons */
-const SVG_ICONS = {
-  ph: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
-  ml: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
-  map: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>'
-};
-const renderSvg = p => `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-
-/* Render Card Studio Web App */
-function render() {
-  const c = $('#card');
-  document.documentElement.setAttribute('data-theme', S.mode);
-  c.style.setProperty('--ac', S.ac);
-  
-  // Set Template Base Class
-  c.className = `${S.tpl} shape-${S.btnShape}`;
-  $('#tbn').textContent = S.company || S.name || 'CARD STUDIO';
-  $('#tba').innerHTML = S.logo ? `<img src="${S.logo}">` : S.avatar ? `<img src="${S.avatar}">` : (S.name||'C')[0];
-
-  // Build Sections Data
-  const avatarHtml = S.avatar 
-    ? `<img class="av-img" src="${S.avatar}" style="object-position:50% ${S.ay}%">` 
-    : `<div style="width:100%;height:100%;display:grid;place-items:center;background:var(--ac);color:#fff;font-weight:700;font-size:32px">${(S.name||'?')[0]}</div>`;
-
-  const logoHtml = S.logo ? `<img class="lg-img" src="${S.logo}" style="max-height:40px">` : '';
-
-  const contactHtml = (S.phone || S.email || S.addr) ? `
-    <div class="ct-list box-card">
-      ${S.phone ? `<a href="tel:${esc(S.phone)}">${renderSvg(SVG_ICONS.ph)} ${esc(S.phone)}</a>` : ''}
-      ${S.email ? `<a href="mailto:${esc(S.email)}">${renderSvg(SVG_ICONS.ml)} ${esc(S.email)}</a>` : ''}
-      ${S.addr ? `<span>${renderSvg(SVG_ICONS.map)} ${esc(S.addr)}</span>` : ''}
-    </div>
-  ` : '';
-
-  const linksHtml = S.links.length ? `
-    <div class="btn-list">
-      ${S.links.map(l => `
-        <a class="btn-item" href="${esc(getHref(l))}" target="_blank" rel="noopener">
-          <span class="btn-icon">${l.icon ? `<img src="${l.icon}">` : TYPES[l.type][1]}</span>
-          <span style="flex:1">${esc(l.label || TYPES[l.type][0])}</span>
-          <span style="opacity:.4">›</span>
-        </a>
-      `).join('')}
-    </div>
-  ` : '';
-
-  const extrasHtml = S.extras.map(e => `
-    <div class="box-card">
-      <h3 style="margin:0 0 8px;font-size:15px;font-weight:700">${esc(e.title)}</h3>
-      <p class="bio-text" style="opacity:.9">${esc(e.body)}</p>
-    </div>
-  `).join('');
-
-  const companyHtml = (S.company || S.taxId) ? `
-    <div class="box-card" style="display:flex;align-items:center;gap:14px">
-      ${logoHtml}
-      <div>
-        <div style="font-weight:700">${esc(S.company)}</div>
-        ${S.tag ? `<div style="font-size:12px;opacity:.7">${esc(S.tag)}</div>` : ''}
-        ${S.taxId ? `<div style="font-size:12px;opacity:.6">統一編號：${esc(S.taxId)}</div>` : ''}
-      </div>
-    </div>
-  ` : '';
-
-  const bioHtml = S.bio ? `<div class="box-card"><p class="bio-text">${esc(S.bio)}</p></div>` : '';
-
-  // Render Layout Structural Variants
-  if (S.tpl === 't1') {
-    c.innerHTML = `
-      <div class="hero-wrap">
-        ${S.bg ? `<img class="hero-img" src="${S.bg}">` : ''}
-      </div>
-      <div class="card-body">
-        <div class="profile-card">
-          <div class="av">${avatarHtml}</div>
-          <div>
-            <h1 style="margin:0;font-size:24px;font-weight:700">${esc(S.name)}</h1>
-            <div style="opacity:.8;font-size:14px">${esc(S.title)}</div>
-            ${S.company ? `<div style="color:var(--ac);font-weight:600;font-size:13px;margin-top:2px">${esc(S.company)}</div>` : ''}
-          </div>
-        </div>
-        ${bioHtml} ${linksHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-      </div>
-    `;
-  } else if (S.tpl === 't2') {
-    c.innerHTML = `
-      <div class="header-bg" ${S.bg ? `style="background:url(${S.bg}) 50% ${S.fy}%/cover"` : ''}></div>
-      <div class="card-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-end">
-          <div class="av">${avatarHtml}</div>
-          ${logoHtml}
-        </div>
-        <div>
-          <h1 style="margin:0;font-size:26px;font-weight:700">${esc(S.name)}</h1>
-          <div style="color:var(--ac);font-weight:600">${esc(S.title)} ｜ ${esc(S.company)}</div>
-        </div>
-        ${linksHtml} ${bioHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-      </div>
-    `;
-  } else if (S.tpl === 't3') {
-    c.innerHTML = `
-      <div class="frame-box">
-        <div style="text-align:center">
-          ${logoHtml}
-          <h1 class="gold-title" style="font-size:28px;margin:10px 0 4px">${esc(S.name)}</h1>
-          <div style="letter-spacing:1px;font-size:13px;opacity:.8">${esc(S.title)}</div>
-        </div>
-        ${bioHtml} ${linksHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-      </div>
-    `;
-  } else if (S.tpl === 't4') {
-    c.innerHTML = `
-      <div class="glass-panel" style="display:flex;gap:16px;align-items:center">
-        <div style="width:70px;height:70px;border-radius:50%;overflow:hidden;flex:none">${avatarHtml}</div>
-        <div>
-          <h1 style="margin:0;font-size:24px">${esc(S.name)}</h1>
-          <div style="opacity:.8">${esc(S.title)}</div>
-        </div>
-      </div>
-      ${bioHtml ? `<div class="glass-panel">${bioHtml}</div>` : ''}
-      ${linksHtml ? `<div class="glass-panel">${linksHtml}</div>` : ''}
-      ${contactHtml ? `<div class="glass-panel">${contactHtml}</div>` : ''}
-      ${extrasHtml ? `<div class="glass-panel">${extrasHtml}</div>` : ''}
-    `;
-  } else if (S.tpl === 't5') {
-    c.innerHTML = `
-      <div class="av">${avatarHtml}</div>
-      <div>
-        <h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.5px">${esc(S.name)}</h1>
-        <div style="opacity:.7;margin-top:4px">${esc(S.title)}</div>
-      </div>
-      ${linksHtml} ${bioHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-    `;
-  } else if (S.tpl === 't6') {
-    c.innerHTML = `
-      <div class="cyber-card">
-        <div style="font-size:12px;opacity:.6">// CARD_STUDIO_PROFILE</div>
-        <h1 style="margin:6px 0;font-size:26px">&gt; ${esc(S.name)}</h1>
-        <div>${esc(S.title)} @ ${esc(S.company)}</div>
-      </div>
-      ${bioHtml} ${linksHtml} ${contactHtml} ${extrasHtml}
-    `;
-  } else if (S.tpl === 't7') {
-    c.innerHTML = `
-      <div class="biz-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div style="width:50px;height:50px;border-radius:12px;overflow:hidden">${avatarHtml}</div>
-          ${logoHtml}
-        </div>
-        <div>
-          <h1 style="margin:10px 0 2px;font-size:22px">${esc(S.name)}</h1>
-          <div style="opacity:.8;font-size:13px">${esc(S.title)}</div>
-        </div>
-      </div>
-      ${linksHtml} ${bioHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-    `;
-  } else if (S.tpl === 't8') {
-    c.innerHTML = `
-      <div class="soft-box" style="display:flex;gap:16px;align-items:center">
-        <div style="width:70px;height:70px;border-radius:24px;overflow:hidden">${avatarHtml}</div>
-        <div>
-          <h1 style="margin:0;font-size:22px;color:#3b2d2d">${esc(S.name)}</h1>
-          <div style="font-size:13px;color:#8c7b7b">${esc(S.title)}</div>
-        </div>
-      </div>
-      ${linksHtml} ${bioHtml} ${contactHtml} ${extrasHtml}
-    `;
-  } else if (S.tpl === 't9') {
-    // Blank Template
-    c.innerHTML = `
-      <div style="text-align:center;padding:20px 0">
-        <div style="width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 12px">${avatarHtml}</div>
-        <h1 style="margin:0;font-size:26px">${esc(S.name)}</h1>
-        <div style="opacity:.7">${esc(S.title)}</div>
-      </div>
-      ${linksHtml} ${bioHtml} ${contactHtml} ${extrasHtml} ${companyHtml}
-    `;
-  }
-}
-
-/* Template Miniature Generator */
-function getTplMiniSvg(key) {
-  const minis = {
-    t1: `<rect width="36" height="18" fill="#27316e"/><rect x="4" y="14" width="28" height="26" rx="3" fill="#fff" stroke="#ddd"/><circle cx="10" cy="20" r="4" fill="#888"/>`,
-    t2: `<rect width="36" height="12" fill="#27316e"/><circle cx="9" cy="12" r="5" fill="#fff" stroke="#27316e"/><rect x="4" y="20" width="28" height="4" rx="2" fill="#ddd"/>`,
-    t3: `<rect x="3" y="3" width="30" height="38" fill="none" stroke="#d4af37" stroke-width="1.5"/><rect x="6" y="6" width="24" height="32" fill="none" stroke="#d4af37" stroke-dasharray="2,2"/>`,
-    t4: `<rect width="36" height="44" fill="#1e1b4b"/><rect x="4" y="6" width="28" height="10" rx="2" fill="rgba(255,255,255,0.2)"/><rect x="4" y="20" width="28" height="18" rx="2" fill="rgba(255,255,255,0.1)"/>`,
-    t5: `<circle cx="18" cy="12" r="6" fill="#888"/><rect x="8" y="22" width="20" height="3" rx="1.5" fill="#444"/><rect x="6" y="28" width="24" height="10" rx="5" fill="#ddd"/>`,
-    t6: `<rect width="36" height="44" fill="#0a0d14"/><rect x="4" y="6" width="28" height="12" fill="none" stroke="#00ffcc"/><line x1="8" y1="12" x2="20" y2="12" stroke="#00ffcc"/>`,
-    t7: `<rect x="4" y="6" width="28" height="16" rx="3" fill="#27316e"/><circle cx="10" cy="14" r="3" fill="#fff"/><rect x="4" y="26" width="28" height="12" rx="2" fill="#ddd"/>`,
-    t8: `<rect width="36" height="44" fill="#fdf6f6"/><rect x="4" y="6" width="28" height="12" rx="4" fill="#fff"/><rect x="4" y="22" width="28" height="16" rx="4" fill="#fff"/>`,
-    t9: `<rect width="36" height="44" fill="#fff"/><rect x="2" y="2" width="32" height="40" fill="none" stroke="#ccc" stroke-dasharray="3,3"/>`
-  };
-  return `<svg class="tp-mini" viewBox="0 0 36 44">${minis[key] || minis.t9}</svg>`;
-}
-
-/* Editor Drawer Form */
-function renderForm() {
-  $('#seg').innerHTML = ['內容資料', '按鈕與區塊', '版型風格'].map((x, i) => 
-    `<button data-tab="${i}" class="${tab===i?'on':''}">${x}</button>`
-  ).join('');
-
-  const inp = (label, prop, val, type='text') => `
-    <label>${label}<input type="${type}" data-p="${prop}" value="${esc(val)}"></label>
-  `;
-
-  const imgUp = (label, prop) => `
-    <label>${label}
-      <input type="file" accept="image/*" data-img="${prop}">
-      ${S[prop] ? `<button class="gb" data-rm="${prop}" style="margin-top:6px">移除圖片</button>` : ''}
-    </label>
-  `;
-
-  if (tab === 0) {
-    $('#form').innerHTML = `
-      ${inp('姓名', 'name', S.name)}
-      ${inp('職稱', 'title', S.title)}
-      ${inp('公司 / 品牌名稱', 'company', S.company)}
-      ${inp('一句话簡介 / 副標題', 'tag', S.tag)}
-      <label>個人簡介<textarea data-p="bio">${esc(S.bio)}</textarea></label>
-      <div class="row">
-        ${inp('電話', 'phone', S.phone)}
-        ${inp('Email', 'email', S.email)}
-      </div>
-      ${inp('地址', 'addr', S.addr)}
-      ${inp('統一編號', 'taxId', S.taxId)}
-      ${inp('官方網站網址', 'site', S.site, 'url')}
-      ${imgUp('個人頭像照片', 'avatar')}
-      ${S.avatar ? `<label>頭像上下焦點位置 (Y-Axis)<input type="range" data-p="ay" min="0" max="100" value="${S.ay}"></label>` : ''}
-      ${imgUp('品牌 LOGO', 'logo')}
-      ${imgUp('封面/背景圖片', 'bg')}
-      ${S.bg ? `<label>背景上下焦點位置 (Y-Axis)<input type="range" data-p="fy" min="0" max="100" value="${S.fy}"></label>` : ''}
-    `;
-  } else if (tab === 1) {
-    $('#form').innerHTML = `
-      <h4 style="margin:0 0 10px">連結按鈕</h4>
-      ${S.links.map((l, i) => `
-        <div class="item">
-          <div class="row">
-            <label>類型
-              <select data-p="links.${i}.type">
-                ${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${l.type===k?'selected':''}>${v[0]}</option>`).join('')}
-              </select>
-            </label>
-            ${inp('名稱', `links.${i}.label`, l.label)}
-          </div>
-          ${inp('網址 / 號碼', `links.${i}.url`, l.url)}
-          <label>自訂圖示 (ICON 上傳)
-            <input type="file" accept="image/*" data-img="links.${i}.icon">
-            ${l.icon ? `<button class="gb" data-rm="links.${i}.icon">恢復預設 ICON</button>` : ''}
-          </label>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="gb" data-lm="${i},-1">↑ 上移</button>
-            <button class="gb" data-lm="${i},1">↓ 下移</button>
-            <button class="gb" data-dl="links,${i}" style="color:#e53e3e">刪除</button>
-          </div>
-        </div>
-      `).join('')}
-      <button class="gb" data-add="links" style="width:100%;justify-content:center;padding:12px;margin-bottom:24px">＋ 新增連結按鈕</button>
-
-      <h4 style="margin:0 0 10px">自訂圖文區塊</h4>
-      ${S.extras.map((e, i) => `
-        <div class="item">
-          ${inp('標題', `extras.${i}.title`, e.title)}
-          <label>內容<textarea data-p="extras.${i}.body">${esc(e.body)}</textarea></label>
-          <button class="gb" data-dl="extras,${i}" style="color:#e53e3e">刪除區塊</button>
-        </div>
-      `).join('')}
-      <button class="gb" data-add="extras" style="width:100%;justify-content:center;padding:12px">＋ 新增圖文區塊</button>
-    `;
-  } else {
-    $('#form').innerHTML = `
-      <h4 style="margin:0 0 12px">選擇版型結構</h4>
-      <div class="tp">
-        ${Object.entries(TEMPLATES).map(([k, v]) => `
-          <button data-tpl="${k}" class="${S.tpl===k?'on':''}">
-            ${getTplMiniSvg(k)}
-            <span>${v}</span>
-          </button>
-        `).join('')}
-      </div>
-
-      <h4 style="margin:16px 0 10px">按鈕外觀形狀</h4>
-      <div style="display:flex;gap:10px;margin-bottom:20px">
-        <button class="gb ${S.btnShape==='rounded'?'on':''}" data-shape="rounded">圓角卡片</button>
-        <button class="gb ${S.btnShape==='pill'?'on':''}" data-shape="pill">膠囊圓弧</button>
-        <button class="gb ${S.btnShape==='square'?'on':''}" data-shape="square">俐落方形</button>
-      </div>
-
-      <h4 style="margin:16px 0 10px">品牌主題色</h4>
-      <div class="sw">
-        ${['#27316e','#2b45f0','#1f7a8c','#2f5d4e','#9b8274','#a98235','#7a2e4d','#18181b'].map(c => `
-          <button style="background:${c}" class="${S.ac===c?'on':''}" data-ac="${c}"></button>
-        `).join('')}
-      </div>
-
-      <h4 style="margin:16px 0 10px">深淺色模式</h4>
-      <div style="display:flex;gap:10px;margin-bottom:24px">
-        <button class="gb ${S.mode==='light'?'on':''}" data-mode="light">淺色 Light</button>
-        <button class="gb ${S.mode==='dark'?'on':''}" data-mode="dark">深色 Dark</button>
-      </div>
-
-      <button class="gb" id="rs" style="width:100%;justify-content:center;color:#e53e3e">重設為預設名片範例</button>
-    `;
-  }
-}
-
-/* Event Handlers */
-document.addEventListener('input', e => {
-  const el = e.target;
-  if (el.dataset.p) {
-    const ks = el.dataset.p.split('.');
-    let o = S;
-    ks.slice(0, -1).forEach(k => o = o[k]);
-    o[ks.at(-1)] = el.value;
-    save(); render();
-  }
-  if (el.dataset.img && el.files[0]) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const cv = document.createElement('canvas');
-        const max = el.dataset.img.includes('icon') ? 128 : 800;
-        const scale = Math.min(1, max / Math.max(img.width, img.height));
-        cv.width = img.width * scale;
-        cv.height = img.height * scale;
-        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-        
-        const ks = el.dataset.img.split('.');
-        let o = S;
-        ks.slice(0, -1).forEach(k => o = o[k]);
-        o[ks.at(-1)] = cv.toDataURL('image/jpeg', 0.8);
-        save(); renderForm(); render();
-      };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(el.files[0]);
+document.addEventListener('input',e=>{
+  const el=e.target;
+  if(el.dataset.c){S.c[el.dataset.c]=el.value;save();render();return}
+  if(el.dataset.p){const[o,k]=walk(el.dataset.p);o[k]=el.type==='range'?+el.value:el.value;save();render();return}
+  if(el.dataset.img&&el.files[0]){
+    const fr=new FileReader();
+    fr.onload=()=>{const im=new Image();im.onload=()=>{
+      const mx=el.dataset.img.includes('icon')?128:el.dataset.img==='bg'?1000:700,sc=Math.min(1,mx/Math.max(im.width,im.height));
+      const cv=document.createElement('canvas');cv.width=im.width*sc;cv.height=im.height*sc;
+      const cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);
+      const[o,k]=walk(el.dataset.img);o[k]=cv.toDataURL('image/jpeg',.82);save();form();render()};im.src=fr.result};
+    fr.readAsDataURL(el.files[0]);
   }
 });
-
-$('#sheet').addEventListener('click', e => {
-  const b = e.target.closest('button');
-  if (!b) return;
-  const d = b.dataset;
-
-  if (d.tab !== undefined) { tab = +d.tab; renderForm(); return; }
-  if (d.tpl) S.tpl = d.tpl;
-  if (d.shape) S.btnShape = d.shape;
-  if (d.ac) S.ac = d.ac;
-  if (d.mode) S.mode = d.mode;
-  if (d.rm) {
-    const ks = d.rm.split('.');
-    let o = S;
-    ks.slice(0, -1).forEach(k => o = o[k]);
-    o[ks.at(-1)] = '';
-  }
-  if (d.lm) {
-    const [i, dir] = d.lm.split(',').map(Number);
-    const j = i + dir;
-    if (j >= 0 && j < S.links.length) [S.links[i], S.links[j]] = [S.links[j], S.links[i]];
-  }
-  if (d.dl) {
-    const [k, i] = d.dl.split(',');
-    S[k].splice(+i, 1);
-  }
-  if (d.add) {
-    if (d.add === 'links') S.links.push({ type: 'other', label: '新連結按鈕', url: '', icon: '' });
-    if (d.add === 'extras') S.extras.push({ title: '新圖文區塊', body: '請輸入內容說明...' });
-  }
-  if (b.id === 'rs') {
-    if (confirm('確定要清除所有自訂內容重設嗎？')) { S = DEF(); }
-  }
-
-  save(); renderForm(); render();
+$('#sheet').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.tab!==undefined){tab=+d.tab;form();$('#form').scrollTop=0;return}
+  if(d.tpl){const t=TPL[d.tpl];S.tpl=d.tpl;S.c={...t.p};S.rad=t.rad;S.font=t.font}
+  if(d.pre){const p=PRESETS[+d.pre];S.c={bg:p[0],sf:p[1],fg:p[2],ac:p[3]}}
+  if(d.shape)S.shape=d.shape;if(d.font)S.font=d.font;
+  if(d.rm){const[o,k]=walk(d.rm);o[k]=''}
+  if(d.lm){const[i,n]=d.lm.split(',').map(Number),j=i+n;if(j>=0&&j<S.links.length)[S.links[i],S.links[j]]=[S.links[j],S.links[i]]}
+  if(d.dl){const[k,i]=d.dl.split(',');S[k].splice(+i,1)}
+  if(d.add==='links')S.links.push({type:'other',label:'新連結',url:'',icon:''});
+  if(d.add==='extras')S.extras.push({title:'新區塊',body:'請輸入內容'});
+  if(b.id==='rs'){if(!b.dataset.c){b.dataset.c=1;b.textContent='再按一次確認重設';return}S=DEF()}
+  save();form();render();
 });
 
-/* Menu & Modal Functionalities */
-const openMenu = open => {
-  $('#menu').hidden = !open;
-  $('#mbk').hidden = !open;
+const modal=h=>{$('#mb').innerHTML=h;$('#modal').hidden=false};
+$('#mx').onclick=()=>{$('#modal').hidden=true};
+$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').hidden=true};
+$('#ed').onclick=()=>{form();$('#sheet').classList.add('open')};
+$('#done').onclick=()=>{$('#sheet').classList.remove('open');toast('已儲存')};
+$('#sh').onclick=async()=>{
+  try{if(navigator.share){await navigator.share({title:S.name,text:S.name+' 的數位名片',url:location.href});return}}catch(e){return}
+  try{await navigator.clipboard.writeText(location.href);toast('已複製名片連結')}catch(e){toast('無法複製連結')}
 };
-$('#tbm').onclick = () => openMenu($('#menu').hidden);
-$('#mbk').onclick = () => openMenu(false);
-
-const showModal = html => {
-  $('#mbody').innerHTML = html;
-  $('#modal').hidden = false;
+$('#qr').onclick=()=>{
+  modal('<div id="qrb"></div><p style="font-size:13px;color:#6a6f7a">掃描即可開啟這張名片</p>');
+  try{new QRCode($('#qrb'),{text:location.href,width:200,height:200})}catch(e){$('#qrb').textContent='QR Code 載入失敗'}
 };
-$('#mx').onclick = () => { $('#modal').hidden = true; };
-
-/* Share & Tools */
-async function shareCard() {
-  const url = location.href;
-  try {
-    if (navigator.share) {
-      await navigator.share({ title: S.name, text: `${S.name} 的數位名片`, url });
-      return;
-    }
-  } catch(e) {}
-  try {
-    await navigator.clipboard.writeText(url);
-    toast('已複製名片連結到剪貼簿');
-  } catch(e) { toast('無法複製連結'); }
-}
-$('#fab').onclick = shareCard;
-$('#tbs').onclick = () => {
-  if (S.site) window.open(S.site, '_blank');
-  else toast('請先在設定中填入網站網址');
+$('#vc').onclick=()=>{
+  const v=s=>String(s||'').replace(/[\\;,]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+  const t=['BEGIN:VCARD','VERSION:3.0','FN:'+v(S.name),'TITLE:'+v(S.title),'ORG:'+v(S.company),S.phone&&'TEL;TYPE=CELL:'+v(S.phone),S.email&&'EMAIL:'+v(S.email),S.site&&'URL:'+S.site,S.addr&&'ADR;TYPE=WORK:;;'+v(S.addr)+';;;;','END:VCARD'].filter(Boolean).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/vcard'}));a.download=(S.name||'card')+'.vcf';document.body.appendChild(a);a.click();a.remove();
+  toast('聯絡人檔案已開始下載');
 };
-
-$('#vc').onclick = () => {
-  const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${S.name}\nTITLE:${S.title}\nORG:${S.company}\nTEL:${S.phone}\nEMAIL:${S.email}\nURL:${S.site}\nEND:VCARD`;
-  const blob = new Blob([vcard], { type: 'text/vcard' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `${S.name||'card'}.vcf`;
-  a.click();
-  toast('通訊錄檔案 (vCard) 已開始下載');
-};
-
-$('#edb').onclick = () => {
-  renderForm();
-  $('#sheet').classList.add('open');
-};
-$('#done').onclick = () => {
-  $('#sheet').classList.remove('open');
-  toast('內容已成功儲存');
-};
-
-$('#menu').addEventListener('click', async e => {
-  const b = e.target.closest('button');
-  if (!b) return;
-  openMenu(false);
-  const action = b.dataset.m;
-
-  if (action === 'qr') {
-    showModal('<div id="qrb" style="display:flex;justify-content:center;margin:16px 0"></div><p style="font-size:13px;opacity:.7">掃描二維碼即可在手機開啟名片</p>');
-    new QRCode($('#qrb'), { text: location.href, width: 200, height: 200 });
-  } else if (action === 'img') {
-    toast('正在生成名片高畫質圖片...');
-    try {
-      const cv = await html2canvas($('#card'), { scale: 2, useCORS: true, backgroundColor: null });
-      showModal(`<img src="${cv.toDataURL('image/png')}" style="width:100%;border-radius:12px"><p style="font-size:13px;opacity:.7;margin-top:10px">長按圖片即可儲存至相簿</p>`);
-    } catch(x) { toast('圖片生成失敗'); }
-  } else if (action === 'share') shareCard();
-  else if (action === 'vc') $('#vc').click();
-  else if (action === 'ed') $('#edb').click();
-});
-
-// Init
 render();
 </script>
 </body>
