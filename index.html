@@ -23,7 +23,7 @@ h1,h3{font-family:var(--hf)}
 .cv{display:none}
 .who{display:flex;gap:16px;align-items:center;padding:calc(36px + env(safe-area-inset-top,0px)) 20px 8px}
 .nm{flex:1}
-.av{flex:none;width:var(--avs);height:var(--avs);overflow:hidden;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-size:calc(var(--avs)*.36);font-weight:700}
+.av{flex:none;width:min(var(--avs),34vw);height:min(var(--avs),34vw);overflow:hidden;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-size:calc(var(--avs)*.36);font-weight:700}
 .av img{width:100%;height:100%;object-fit:cover}
 h1{font-size:28px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
 .ti{margin-top:3px;overflow-wrap:anywhere}
@@ -33,9 +33,9 @@ h1{font-size:28px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
 [data-av=square] .av{border-radius:8px}
 [data-av=blob] .av{border-radius:34% 66% 58% 42%/46% 40% 60% 54%}
 [data-lay=center] .who{flex-direction:column;text-align:center;gap:14px}
-[data-lay=center] h1{font-size:30px}
+[data-lay=center] h1{font-size:clamp(26px,7.6vw,30px)}
 [data-lay=right] .who{flex-direction:row-reverse;justify-content:space-between}
-[data-lay=right] h1{font-size:34px;line-height:1.1}
+[data-lay=right] h1{font-size:clamp(26px,8.4vw,34px);line-height:1.1}
 [data-hdr=cover] .cv{display:block;height:220px;background:var(--ac) center/cover no-repeat;background-position:50% var(--fy,50%)}
 [data-hdr=cover] .who{padding-top:0;align-items:flex-start}
 [data-hdr=cover] .av{margin-top:calc(var(--avs)*-.5);border:4px solid var(--bg)}
@@ -46,6 +46,20 @@ h1{font-size:28px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
 [data-hdr=band] .co{color:var(--acf);opacity:.8}
 [data-hdr=band] .ti{opacity:.92}
 [data-hdr=band] .av{background:var(--acf);color:var(--ac)}
+
+/* 人像背景頭部：照片當首頁上方背景，姓名疊在照片下緣 */
+[data-hdr^=photo] .hd{position:relative;overflow:hidden;height:clamp(320px,100vw,480px);border-radius:0 0 28px 28px;color:#fff}
+[data-hdr^=photo] .cv{display:block;position:absolute;inset:0;height:auto;background:var(--ac) center/cover no-repeat;background-position:50% var(--fy,50%)}
+[data-hdr^=photo] .hd::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0,rgba(0,0,0,.34) 40%,transparent 68%);pointer-events:none}
+[data-hdr^=photo] .who{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 22px 24px;flex-direction:column;align-items:flex-start;text-align:left;gap:0}
+[data-hdr^=photo] .av{display:none}
+[data-hdr^=photo] h1{color:#fff;font-size:clamp(28px,9vw,38px);text-shadow:0 2px 14px rgba(0,0,0,.35)}
+[data-hdr^=photo] .ti{color:rgba(255,255,255,.94)}
+[data-hdr^=photo] .co{color:#fff;opacity:.85}
+[data-lay=center][data-hdr^=photo] .who{align-items:center;text-align:center}
+[data-lay=right][data-hdr^=photo] .who{flex-direction:column;align-items:flex-end;text-align:right}
+[data-hdr=photoc] .hd{margin:calc(14px + env(safe-area-inset-top,0px)) 14px 0;border-radius:30px;height:clamp(320px,98vw,460px)}
+[data-hdr=photofull] .hd{height:clamp(440px,76vh,680px);height:clamp(440px,76dvh,680px)}
 
 /* ===== 內容區 ===== */
 .secs{display:grid;gap:var(--gap);padding:18px 20px 0}
@@ -106,7 +120,7 @@ h1{font-size:28px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
 .pri:disabled{opacity:.6}
 
 /* ===== 編輯面板 ===== */
-#sheet{--bg:#f4f5f7;--fg:#16181d;--sf:#fff;--bd:#e0e2e7;--mu:#6a6f7a;--sa:#2b45f0;position:fixed;left:0;right:0;bottom:0;margin:0 auto;z-index:20;width:100%;max-width:480px;top:38%;height:auto;background:var(--bg);color:var(--fg);border-radius:24px 24px 0 0;display:none;flex-direction:column;overflow:hidden;box-shadow:0 -12px 40px rgba(0,0,0,.28)}
+#sheet{--bg:#f4f5f7;--fg:#16181d;--sf:#fff;--bd:#e0e2e7;--mu:#6a6f7a;--sa:#2b45f0;position:fixed;left:0;right:0;bottom:0;margin:0 auto;z-index:20;width:100%;max-width:480px;height:62vh;min-height:240px;max-height:100%;background:var(--bg);color:var(--fg);border-radius:24px 24px 0 0;display:none;flex-direction:column;overflow:hidden;box-shadow:0 -12px 40px rgba(0,0,0,.28)}
 #sheet.open{display:flex;-webkit-animation:sheetUp .32s ease-out;animation:sheetUp .32s ease-out}
 #sheet.closing{display:flex;-webkit-animation:sheetDown .25s ease-in forwards;animation:sheetDown .25s ease-in forwards}
 @-webkit-keyframes sheetUp{from{-webkit-transform:translateY(100%)}to{-webkit-transform:translateY(0)}}
@@ -220,7 +234,7 @@ const PAGE={
  night:c=>{const r=rnd(11);let s='';for(let i=0;i<70;i++)s+=`<circle cx="${(r()*480).toFixed(0)}" cy="${(r()*720).toFixed(0)}" r="${(.5+r()*1.2).toFixed(1)}" fill="${c.fg}" opacity="${(.25+r()*.6).toFixed(2)}"/>`;
   return pg(`<radialGradient id="a"><stop offset="0" stop-color="${c.ac}" stop-opacity=".55"/><stop offset="1" stop-color="${c.ac}" stop-opacity="0"/></radialGradient>`,`<ellipse cx="240" cy="0" rx="340" ry="270" fill="url(#a)"/><ellipse cx="480" cy="520" rx="200" ry="260" fill="url(#a)" opacity=".5"/><ellipse cx="0" cy="760" rx="220" ry="240" fill="url(#a)" opacity=".4"/>${s}`,c)},
  soft:c=>pg('',`<circle cx="60" cy="40" r="150" fill="${c.ac}" opacity=".16"/><circle cx="450" cy="120" r="110" fill="${c.ac}" opacity=".12"/><circle cx="395" cy="30" r="40" fill="#fff" opacity=".55"/><circle cx="120" cy="190" r="22" fill="#fff" opacity=".5"/><path d="M0 470C120 420 220 520 340 470S460 440 480 450V640H0Z" fill="${c.ac}" opacity=".07"/><path d="M0 540C140 500 240 580 360 540S470 520 480 524V700H0Z" fill="${c.ac}" opacity=".06"/>`,c),
- mag:c=>pg(`<pattern id="h" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="9" fill="${c.fg}" opacity=".16"/></pattern>`,`<line x1="22" y1="0" x2="22" y2="960" stroke="${c.fg}" stroke-opacity=".12"/><line x1="458" y1="0" x2="458" y2="960" stroke="${c.fg}" stroke-opacity=".12"/><circle cx="420" cy="150" r="210" fill="none" stroke="${c.ac}" stroke-opacity=".2" stroke-width="1.5"/><circle cx="420" cy="150" r="150" fill="none" stroke="${c.ac}" stroke-opacity=".13"/><rect x="22" y="0" width="64" height="8" fill="${c.ac}"/><rect x="22" y="560" width="436" height="90" fill="url(#h)"/>`,c),
+ mag:c=>pg(`<pattern id="h" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="9" fill="${c.fg}" opacity=".16"/></pattern>`,`<line x1="22" y1="0" x2="22" y2="960" stroke="${c.fg}" stroke-opacity=".12"/><line x1="458" y1="0" x2="458" y2="960" stroke="${c.fg}" stroke-opacity=".12"/><circle cx="360" cy="150" r="100" fill="none" stroke="${c.ac}" stroke-opacity=".2" stroke-width="1.5"/><circle cx="360" cy="150" r="64" fill="none" stroke="${c.ac}" stroke-opacity=".13"/><rect x="22" y="0" width="64" height="8" fill="${c.ac}"/><rect x="22" y="560" width="436" height="90" fill="url(#h)"/>`,c),
  clean:c=>pg(`<pattern id="g" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="${c.fg}" stroke-opacity=".07"/></pattern>`,`<rect width="480" height="640" fill="url(#g)"/><circle cx="440" cy="330" r="130" fill="${c.ac}" opacity=".035"/>`,c)
 };
 
@@ -240,6 +254,10 @@ const TPL={
  retro:{n:'復古紙感',rad:6,font:'serif',shape:'rounded',p:{bg:'#f1e6d0',sf:'#fbf5e6',fg:'#3b2a1a',ac:'#9c3d2a'},s:{hdr:'band',lay:'left',av:'square',box:'outline',lnk:'solid',lyt:'list',qa:false,bgm:'image',gap:12,avs:96}},
  vivid:{n:'活力撞色',rad:28,font:'sans',shape:'pill',p:{bg:'#fff4d6',sf:'#ffffff',fg:'#1b1b1b',ac:'#ff4d2e'},s:{hdr:'cover',lay:'center',av:'circle',box:'shadow',lnk:'fill',lyt:'grid',qa:true,bgm:'image',gap:12,avs:96}},
  ocean:{n:'海洋清爽',rad:20,font:'sans',shape:'rounded',p:{bg:'#e8f4fa',sf:'#ffffff',fg:'#0e2a3b',ac:'#0b8fc6'},s:{hdr:'none',lay:'left',av:'rounded',box:'glass',lnk:'glass',lyt:'list',qa:true,bgm:'gradient',gap:14,avs:88}},
+ photo:{n:'人像封面',rad:22,font:'sans',shape:'rounded',p:{bg:'#f6f6f4',sf:'#ffffff',fg:'#14161a',ac:'#2f5bea'},s:{hdr:'photo',lay:'left',av:'circle',box:'shadow',lnk:'solid',lyt:'list',qa:true,bgm:'solid',gap:14,avs:92}},
+ photofull:{n:'滿版人像',rad:22,font:'sans',shape:'rounded',p:{bg:'#0b0b10',sf:'#15151c',fg:'#f2f2f7',ac:'#ff6b81'},s:{hdr:'photofull',lay:'left',av:'circle',box:'glass',lnk:'glass',lyt:'list',qa:true,bgm:'solid',gap:14,avs:92}},
+ photocard:{n:'人像卡片',rad:26,font:'sans',shape:'pill',p:{bg:'#eef1f6',sf:'#ffffff',fg:'#111827',ac:'#111827'},s:{hdr:'photoc',lay:'center',av:'circle',box:'shadow',lnk:'fill',lyt:'grid',qa:true,bgm:'solid',gap:12,avs:92}},
+ photomag:{n:'人像雜誌',rad:4,font:'serif',shape:'square',p:{bg:'#f2eee6',sf:'#ffffff',fg:'#1a1a1a',ac:'#b5352b'},s:{hdr:'photo',lay:'left',av:'square',box:'flat',lnk:'outline',lyt:'list',qa:false,bgm:'solid',gap:10,avs:92}},
  blank:{n:'空白自訂',rad:16,font:'sans',shape:'rounded',p:{bg:'#fafafa',sf:'#ffffff',fg:'#222222',ac:'#222222'},s:{hdr:'none',lay:'left',av:'circle',box:'outline',lnk:'outline',lyt:'list',qa:false,bgm:'solid',gap:14,avs:84}}};
 const PRESETS=[['#f3f5f8','#ffffff','#101828','#2f5bea'],['#ffffff','#ffffff','#111111','#111111'],['#0a0c14','#151826','#eceefb','#8b93ff'],['#fdf3ee','#ffffff','#43302f','#d1647c'],['#f2f0ea','#ffffff','#1a1a1a','#b5352b'],['#f6f1e7','#fffdf8','#2a2118','#a0682b'],['#101010','#1c1c1c','#f5f5f5','#e8c468'],['#eaf4ee','#ffffff','#14302a','#1f8a63'],
  ['#e8f4fa','#ffffff','#0e2a3b','#0b8fc6'],['#f6f0ff','#ffffff','#3a2d5c','#9b72f2'],['#fff4d6','#ffffff','#1b1b1b','#ff4d2e'],['#0e0e0e','#1a1a1a','#f4efe3','#d4af37'],
@@ -253,6 +271,14 @@ function mini(k){
   if(s.bgm!=='solid')o+=`<circle cx="18" cy="0" r="18" fill="${p.ac}" opacity=".35"/>`;
   if(s.hdr==='cover')o+=`<rect width="36" height="15" fill="${p.ac}"/>`;
   if(s.hdr==='band')o+=`<path d="M0 0h36v21q0 3-3 3H3q-3 0-3-3z" fill="${p.ac}"/>`;
+  if(/^photo/.test(s.hdr)){
+    const ph=s.hdr==='photofull'?27:s.hdr==='photoc'?22:20,x0=s.hdr==='photoc'?2:0,w0=s.hdr==='photoc'?32:36,y0=s.hdr==='photoc'?2:0;
+    o+=`<rect x="${x0}" y="${y0}" width="${w0}" height="${ph}" rx="${s.hdr==='photoc'?4:0}" fill="${p.ac}" opacity=".85"/><circle cx="18" cy="${y0+ph*.42}" r="4.2" fill="#fff" opacity=".6"/><path d="M9 ${y0+ph}q0-8 9-8t9 8z" fill="#fff" opacity=".5"/><rect x="${s.lay==='center'?11:5}" y="${y0+ph-4.5}" width="14" height="2.4" rx="1.2" fill="#fff"/>`;
+    if(s.qa)for(let i=0;i<4;i++)o+=`<circle cx="${8+i*6.7}" cy="${ph+5}" r="1.8" fill="${p.ac}" opacity=".55"/>`;
+    const rx2=s.shape==='pill'?2.7:s.shape==='square'?.6:1.8,t2=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx2}" fill="${s.lnk==='fill'?p.ac:s.lnk==='outline'?'none':p.sf}" stroke="${s.lnk==='outline'?p.ac:p.fg}" stroke-opacity=".3" stroke-width=".6"/>`;
+    const ty=ph+9;o+=ty+9<44?(s.lyt==='grid'?t2(4,ty,13.4,9)+t2(18.6,ty,13.4,9):t2(4,ty,28,4.6)+t2(4,ty+6,28,4.6)):'';
+    return`<svg viewBox="0 0 36 44">${o}</svg>`;
+  }
   const cy=s.hdr==='cover'?15:11,cx=s.lay==='center'?18:s.lay==='right'?28:9;
   const rr=s.av==='circle'||s.av==='blob'?5.5:s.av==='rounded'?3:1;
   o+=`<rect x="${cx-5.5}" y="${cy-5.5}" width="11" height="11" rx="${rr}" fill="${s.hdr==='band'?'#fff':p.ac}" stroke="${p.bg}" stroke-width="1.2"/>`;
@@ -336,7 +362,7 @@ function render(){
   colors();
   document.title=(S.name||'數位名片')+' 的數位名片';
   const av=S.avatar?`<img src="${esc(S.avatar)}" style="object-position:50% ${+S.ay}%" alt="">`:esc((S.name||'?').trim()[0]||'?');
-  const cv=`<div class="cv" style="background-image:url('${esc(coverUrl())}')"></div>`;
+  const cv=`<div class="cv" style="background-image:url('${esc(/^photo/.test(S.hdr)?(S.bg||S.avatar||coverUrl()):coverUrl())}')"></div>`;
   const ct=[S.phone&&`<a href="tel:${esc(S.phone)}">${ico(P.ph)}<span>${esc(S.phone)}</span></a>`,S.email&&`<a href="mailto:${esc(S.email)}">${ico(P.ml)}<span>${esc(S.email)}</span></a>`,S.site&&`<a href="${esc(href({url:S.site}))}" target="_blank" rel="noopener">${ico(P.gl)}<span>${esc(S.site.replace(/^https?:\/\//,''))}</span></a>`,S.addr&&`<div>${ico(P.mp)}<span>${esc(S.addr)}</span></div>`].filter(Boolean).join('');
   const qa=[S.phone&&['通話','tel:'+S.phone,P.ph],S.email&&['郵件','mailto:'+S.email,P.ml],S.addr&&['導航','https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(S.addr),P.mp],S.site&&['網站',href({url:S.site}),P.gl]].filter(Boolean);
   $('#card').innerHTML=`
@@ -417,7 +443,23 @@ function viewChangePw(){
 
 
 /* ====== 編輯器（離開即鎖定） ====== */
-function openEditor(){form();$('#sheet').classList.remove('closing');$('#sheet').classList.add('open');document.body.classList.add('editing')}
+/* 手機鍵盤彈出時，編輯區自動放大到鍵盤上方的可見範圍 */
+let baseH=0;
+function fitSheet(){
+  const sh=$('#sheet'),vv=window.visualViewport,h=vv?vv.height:innerHeight;
+  if(!sh.classList.contains('open'))return;
+  const typing=/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'');
+  if(!typing||h>=baseH-1)baseH=Math.max(baseH,h,innerHeight);
+  const kb=typing&&h<baseH*.8;
+  sh.style.height=Math.max(240,Math.round(kb?h-10:h*.62))+'px';
+  sh.style.bottom=vv?Math.max(0,Math.round(innerHeight-vv.offsetTop-vv.height))+'px':'0px';
+}
+if(window.visualViewport){visualViewport.addEventListener('resize',fitSheet);visualViewport.addEventListener('scroll',fitSheet)}
+addEventListener('resize',fitSheet);
+document.addEventListener('focusin',e=>{if(!e.target.closest('#sheet'))return;
+  [120,350].forEach(t=>setTimeout(()=>{fitSheet();try{e.target.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},t))});
+document.addEventListener('focusout',()=>setTimeout(fitSheet,200));
+function openEditor(){form();$('#sheet').classList.remove('closing');$('#sheet').classList.add('open');document.body.classList.add('editing');baseH=0;fitSheet()}
 function closeEditor(){unlocked=false;const sh=$('#sheet');sh.classList.remove('open');sh.classList.add('closing');document.body.classList.remove('editing');setTimeout(()=>sh.classList.remove('closing'),260)}
 $('#ed').onclick=()=>{unlocked?openEditor():authStart(openEditor)};
 $('#done').onclick=()=>{closeEditor();toast('已儲存，編輯器已鎖定')};
@@ -446,7 +488,7 @@ function form(){
   if(tab===0)h=`${sec('品牌形象','頭像、LOGO、封面與頁面背景圖放這裡，一次設定完。')}
   ${img('頭像','avatar',S.avatar)}${S.avatar?rng('頭像上下位置','ay',S.ay):''}
   ${img('品牌 LOGO','logo',S.logo)}
-  ${img('封面圖（「封面圖」頭部樣式使用；不上傳就用範本內建封面）','bg',S.bg)}${S.bg?rng('封面上下位置','fy',S.fy):''}
+  ${img('封面／照片背景圖（封面圖、照片背景類頭部使用；沒上傳會改用頭像，再沒有就用內建圖）','bg',S.bg)}${S.bg||(/^photo/.test(S.hdr)&&S.avatar)?rng('照片上下位置（調整臉的位置）','fy',S.fy):''}
   ${img('自訂頁面背景圖（選填）','pbg',S.pbg)}
   ${sec('基本資料')}${inp('姓名','name',S.name)}${inp('職稱','title',S.title)}${inp('公司／品牌','company',S.company)}${inp('一句話簡介','tag',S.tag)}
   <label>個人簡介<textarea data-p="bio">${esc(S.bio)}</textarea></label>
@@ -460,7 +502,8 @@ function form(){
   <div class="tp">${Object.entries(TPL).map(([k,v])=>`<button data-tpl="${k}" class="${S.tpl===k?'on':''}">${mini(k)}${v.n}</button>`).join('')}</div>
   ${sec('配色方案','一鍵套用整組顏色；想單獨改某一項，到「設計」分頁對應物件旁邊調整。')}<div class="sw">${PRESETS.map((p,i)=>`<button data-pre="${i}" class="${p[0]===S.c.bg&&p[1]===S.c.sf&&p[2]===S.c.fg&&p[3]===S.c.ac?'on':''}" aria-label="配色 ${i+1}" style="background:linear-gradient(135deg,${p[0]} 50%,${p[3]} 50%)"></button>`).join('')}</div>`;
   else if(tab===2)h=`<p class="hint">每一項都會即時反映在名片上，顏色就在各物件旁邊。</p>
-  ${sec('頭部')}${opt('頭部樣式','hdr',[['none','無'],['cover','封面圖'],['band','色塊']])}
+  ${sec('頭部')}${opt('頭部樣式','hdr',[['none','無'],['cover','封面圖'],['band','色塊'],['photo','照片背景'],['photoc','照片卡片'],['photofull','滿版照片']])}
+  ${/^photo/.test(S.hdr)&&!S.bg&&!S.avatar?'<p class="hint" style="margin-top:8px;color:#c2410c">照片背景要用你的人像：請到「內容」最上方上傳「封面／照片背景圖」或頭像。</p>':''}
   ${opt('排版','lay',[['left','靠左'],['center','置中'],['right','頭像靠右']])}
   ${opt('頭像形狀','av',[['circle','圓形'],['rounded','圓角'],['square','方形'],['blob','水滴']])}
   ${rng('頭像大小','avs',S.avs,56,140)}
@@ -500,7 +543,7 @@ document.addEventListener('input',e=>{
   if(el.dataset.img&&el.files[0]){
     const key=el.dataset.img,fr=new FileReader();
     fr.onload=()=>{const im=new Image();im.onload=()=>{
-      const mx=key.includes('icon')?128:(key==='bg'||key==='pbg')?1000:700,sc=Math.min(1,mx/Math.max(im.width,im.height));
+      const mx=key.includes('icon')?128:(key==='bg'||key==='pbg')?1000:key==='avatar'?900:700,sc=Math.min(1,mx/Math.max(im.width,im.height));
       const cv=document.createElement('canvas');cv.width=im.width*sc;cv.height=im.height*sc;
       const cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);
       const[o,k]=walk(key);o[k]=cv.toDataURL('image/jpeg',.82);
