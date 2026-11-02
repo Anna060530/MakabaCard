@@ -6,17 +6,18 @@
 <meta name="theme-color" content="#f3f5f8">
 <title>數位名片</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 :root{--bg:#f3f5f8;--fg:#101828;--sf:#fff;--ac:#2f5bea;--acf:#fff;--ax:#2f5bea;--r:22px;--lr:16px;--hf:inherit;--gap:14px;--avs:92px;--ser:"Noto Serif TC","Songti TC",Georgia,serif;--mu:color-mix(in srgb,var(--fg) 60%,var(--bg));--bd:color-mix(in srgb,var(--fg) 12%,transparent)}
 @media(prefers-color-scheme:dark){:root{color-scheme:dark}}
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;background:var(--bg)}
-body{margin:0;min-height:100dvh;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;overflow-x:hidden;background-repeat:no-repeat}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;font-family:var(--bf,system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif);overflow-x:hidden;background-repeat:no-repeat}
+#sheet,#modal,.toast{font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit;color:inherit}
 h1,h3,p{margin:0}
-h1,h3{font-family:var(--hf)}
+h1,h3{font-family:var(--hf);font-weight:var(--hw,700)}
 #card{width:100%;max-width:480px;margin:0 auto;padding-bottom:120px;overflow-x:hidden}
 
 /* ===== 頭部 ===== */
@@ -25,7 +26,7 @@ h1,h3{font-family:var(--hf)}
 .nm{flex:1}
 .av{flex:none;width:min(var(--avs),34vw);height:min(var(--avs),34vw);overflow:hidden;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-size:calc(var(--avs)*.36);font-weight:700}
 .av img{width:100%;height:100%;object-fit:cover}
-h1{font-size:28px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+h1{font-size:28px;line-height:1.2;font-weight:var(--hw,700);overflow-wrap:anywhere}
 .ti{margin-top:3px;overflow-wrap:anywhere}
 .co{margin-top:2px;font-size:13px;font-weight:600;color:var(--ax);overflow-wrap:anywhere}
 [data-av=circle] .av{border-radius:50%}
@@ -131,7 +132,7 @@ body.editing #card{padding-bottom:64vh;padding-bottom:64dvh}
 body.editing #bar{display:none}
 .top{flex:none;display:flex;gap:10px;align-items:center;padding:14px 14px 8px}
 .seg{flex:1;display:flex;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:3px}
-.seg button{flex:1;border:0;background:none;border-radius:11px;padding:8px 2px;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;white-space:nowrap}
+.seg button{flex:1;border:0;background:none;border-radius:11px;padding:10px 2px;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;white-space:nowrap}
 .seg button.on{background:var(--sa);color:#fff}
 #done{flex:none;border:0;background:var(--sa);color:#fff;border-radius:14px;padding:10px 16px;font-weight:700;cursor:pointer}
 #form{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 16px calc(40px + env(safe-area-inset-bottom,0px))}
@@ -175,8 +176,8 @@ h4{margin:22px 0 10px;font-size:14px}
 .rt{flex:1;display:flex;align-items:center;gap:10px;min-width:0;background:none;border:0;text-align:left;cursor:pointer;color:var(--fg);padding:4px 0}
 .ri{flex:none;width:32px;height:32px;border-radius:10px;background:rgba(43,69,240,.1);color:var(--sa);display:grid;place-items:center;font-size:13px;font-weight:700}.ri svg{width:17px;height:17px}
 .rt2{flex:1;display:grid;min-width:0}.rt2 b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rt2 small{font-size:11px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mvs{display:flex;gap:4px;flex:none}.mb{width:34px;height:34px;border:1.5px solid var(--bd);border-radius:10px;background:var(--sf);cursor:pointer;font-size:15px;color:var(--fg)}.mb:disabled{opacity:.3}
-.gb.sw3{padding:6px 10px;font-size:12px}.rb{padding:2px 12px 12px;border-top:1px solid var(--bd);margin-top:2px;padding-top:12px}
+.mvs{display:flex;gap:4px;flex:none}.mb{width:40px;height:40px;border:1.5px solid var(--bd);border-radius:10px;background:var(--sf);cursor:pointer;font-size:15px;color:var(--fg)}.mb:disabled{opacity:.3}
+.gb.sw3{padding:9px 12px;font-size:12px}.rb{padding:2px 12px 12px;border-top:1px solid var(--bd);margin-top:2px;padding-top:12px}
 .bh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
 .bh .gb{padding:7px 12px}
 .gb:disabled{opacity:.35;cursor:default}
@@ -188,7 +189,7 @@ h4:first-child{margin-top:4px}
 .tp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .tp button{border:2px solid var(--bd);border-radius:14px;background:var(--sf);padding:8px 4px;cursor:pointer;font-size:12px;font-weight:600;color:var(--fg);display:grid;gap:6px;justify-items:center}
 .tp button.on{border-color:var(--sa)}
-.tp svg{width:100%;max-width:60px;height:auto;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.tp svg{width:100%;max-width:72px;height:auto;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
 .sw{display:flex;flex-wrap:wrap;gap:10px}
 .imgf{margin-bottom:12px}.imgf label{margin-bottom:8px}.thr{display:flex;align-items:center;gap:12px}.th{width:56px;height:56px;object-fit:cover;border-radius:12px;border:1px solid var(--bd);background:#fff}
 .sw button.on{border-color:var(--sa);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--sa)}
@@ -204,6 +205,38 @@ h4:first-child{margin-top:4px}
 #qrb{display:flex;justify-content:center;margin:6px 0 14px}
 .toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);background:#1c1c1e;color:#fff;padding:10px 18px;border-radius:30px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:40;max-width:90%}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 人像造型頭部（拱形／側邊漸隱／拍立得／圓環） ===== */
+[data-hdr^=pt] .cv{display:block;background:var(--ac) center/cover no-repeat;background-position:50% var(--fy,50%)}
+[data-hdr^=pt] .av{display:none}
+[data-hdr^=pt] .who{padding:0;gap:0}
+[data-hdr^=pt] h1{color:var(--fg);font-size:clamp(26px,8.4vw,34px);line-height:1.15}
+[data-hdr=ptarch] .hd,[data-hdr=ptpola] .hd,[data-hdr=ptring] .hd{padding:calc(30px + env(safe-area-inset-top,0px)) 20px 4px;text-align:center}
+[data-hdr=ptarch] .who,[data-hdr=ptpola] .who,[data-hdr=ptring] .who{flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding-top:24px}
+[data-hdr=ptarch] .cv{width:min(68%,270px);height:auto;aspect-ratio:3/4;margin:8px auto 0;border-radius:999px 999px 24px 24px;outline:2px solid var(--ac);outline-offset:8px}
+[data-hdr=ptpola] .hd{position:relative}
+[data-hdr=ptpola] .hd::before{content:"";position:absolute;z-index:1;top:calc(24px + env(safe-area-inset-top,0px));left:50%;width:84px;height:24px;margin-left:-42px;background:color-mix(in srgb,var(--ac) 40%,#fff);opacity:.8;transform:rotate(-3deg)}
+[data-hdr=ptpola] .cv{width:min(70%,280px);height:auto;aspect-ratio:4/5;margin:10px auto 0;border:10px solid #fff;border-bottom-width:48px;border-radius:3px;transform:rotate(-3deg);box-shadow:0 18px 32px -12px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.14)}
+[data-hdr=ptring] .hd{background:radial-gradient(120% 70% at 50% 0,color-mix(in srgb,var(--ac) 22%,transparent),transparent 72%)}
+[data-hdr=ptring] .cv{width:min(46vw,190px);height:auto;aspect-ratio:1;margin:0 auto;border-radius:50%;box-shadow:0 0 0 6px var(--bg),0 0 0 8px var(--ac),0 18px 34px -12px color-mix(in srgb,var(--ac) 55%,transparent)}
+[data-hdr=ptside] .hd{position:relative;overflow:hidden;height:clamp(340px,96vw,440px)}
+[data-hdr=ptside] .hd::after{content:"";position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(to top,var(--bg),transparent);pointer-events:none}
+[data-hdr=ptside] .cv{position:absolute;top:0;right:0;bottom:0;width:70%;height:auto;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 45%);mask-image:linear-gradient(to right,transparent 0,#000 45%)}
+[data-hdr=ptside] .who{position:absolute;left:0;bottom:0;width:58%;z-index:1;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;padding:0 0 26px 22px}
+[data-hdr=ptside] h1{font-size:clamp(30px,10vw,42px);line-height:1.08;text-shadow:0 0 22px var(--bg),0 0 8px var(--bg)}
+
+/* ===== 編輯器：版型分類、字體選擇、無障礙 ===== */
+.tcs{display:flex;gap:8px;margin:0 0 12px;overflow-x:auto;padding-bottom:2px}
+.tc{flex:none;border:1.5px solid var(--bd);background:var(--sf);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;white-space:nowrap}
+.tc.on{background:var(--sa);border-color:var(--sa);color:#fff}
+.tp button.on{box-shadow:0 0 0 1px var(--sa)}
+.nt{display:grid;gap:6px;margin:14px 0 4px;padding:12px 14px;border:1.5px dashed var(--bd);border-radius:14px;background:var(--sf)}
+.nt b{font-size:14px;color:var(--fg)}.nt span{font-size:12px;color:var(--mu);line-height:1.5}.nt .gb{margin-top:4px}
+.fnt{padding:11px 4px 9px}.fnt b{font-size:19px;line-height:1.3;color:var(--fg);white-space:nowrap}.fnt span{font-size:11px}
+:focus-visible{outline:2px solid var(--ax,#2b45f0);outline-offset:2px}
+#sheet :focus-visible,#modal :focus-visible{outline-color:#2b45f0}
+#sheet input:focus-visible,#sheet textarea:focus-visible,#sheet select:focus-visible{outline:none}
+@media(prefers-reduced-motion:reduce){#sheet.open,#sheet.closing{animation:none}.toast{transition:none}}
 </style>
 </head>
 <body>
@@ -273,7 +306,6 @@ const TPL={
  bento:{n:'Bento 磚塊',rad:26,font:'sans',shape:'rounded',p:{bg:'#eceef3',sf:'#ffffff',fg:'#161a26',ac:'#ff5b3a'},s:{hdr:'none',lay:'left',av:'rounded',box:'shadow',lnk:'solid',lyt:'grid',qa:true,bgm:'image',gap:12,avs:80}},
  night:{n:'夜光玻璃',rad:22,font:'sans',shape:'rounded',p:{bg:'#0a0c14',sf:'#151826',fg:'#eceefb',ac:'#8b93ff'},s:{hdr:'none',lay:'center',av:'circle',box:'glass',lnk:'glass',lyt:'list',qa:true,bgm:'image',gap:14,avs:96}},
  soft:{n:'柔和暖調',rad:30,font:'serif',shape:'pill',p:{bg:'#fdf3ee',sf:'#ffffff',fg:'#43302f',ac:'#d1647c'},s:{hdr:'none',lay:'center',av:'blob',box:'shadow',lnk:'solid',lyt:'list',qa:true,bgm:'image',gap:14,avs:100}},
- mag:{n:'雜誌編輯',rad:4,font:'serif',shape:'square',p:{bg:'#f2f0ea',sf:'#ffffff',fg:'#1a1a1a',ac:'#b5352b'},s:{hdr:'none',lay:'right',av:'square',box:'flat',lnk:'outline',lyt:'list',qa:false,bgm:'image',gap:10,avs:112}},
  clean:{n:'極簡名片',rad:14,font:'sans',shape:'rounded',p:{bg:'#ffffff',sf:'#ffffff',fg:'#111111',ac:'#111111'},s:{hdr:'band',lay:'center',av:'circle',box:'flat',lnk:'outline',lyt:'list',qa:true,bgm:'image',gap:12,avs:88}},
  forest:{n:'森林自然',rad:24,font:'serif',shape:'rounded',p:{bg:'#eaf2ec',sf:'#ffffff',fg:'#16301f',ac:'#2f7d4f'},s:{hdr:'cover',lay:'left',av:'circle',box:'shadow',lnk:'solid',lyt:'list',qa:true,bgm:'image',gap:14,avs:92}},
  luxury:{n:'黑金質感',rad:10,font:'serif',shape:'square',p:{bg:'#0e0e0e',sf:'#1a1a1a',fg:'#f4efe3',ac:'#d4af37'},s:{hdr:'band',lay:'center',av:'circle',box:'outline',lnk:'outline',lyt:'list',qa:true,bgm:'image',gap:12,avs:96}},
@@ -285,6 +317,10 @@ const TPL={
  photofull:{n:'滿版人像',rad:22,font:'sans',shape:'rounded',p:{bg:'#0b0b10',sf:'#15151c',fg:'#f2f2f7',ac:'#ff6b81'},s:{hdr:'photofull',lay:'left',av:'circle',box:'glass',lnk:'glass',lyt:'list',qa:true,bgm:'solid',gap:14,avs:92}},
  photocard:{n:'人像卡片',rad:26,font:'sans',shape:'pill',p:{bg:'#eef1f6',sf:'#ffffff',fg:'#111827',ac:'#111827'},s:{hdr:'photoc',lay:'center',av:'circle',box:'shadow',lnk:'fill',lyt:'grid',qa:true,bgm:'solid',gap:12,avs:92}},
  photomag:{n:'人像雜誌',rad:4,font:'serif',shape:'square',p:{bg:'#f2eee6',sf:'#ffffff',fg:'#1a1a1a',ac:'#b5352b'},s:{hdr:'photo',lay:'left',av:'square',box:'flat',lnk:'outline',lyt:'list',qa:false,bgm:'solid',gap:10,avs:92}},
+ arch:{n:'人像拱門',rad:24,font:'serif',shape:'pill',p:{bg:'#eef1e9',sf:'#ffffff',fg:'#222d1f',ac:'#56794a'},s:{hdr:'ptarch',lay:'center',av:'circle',box:'shadow',lnk:'outline',lyt:'list',qa:true,bgm:'solid',gap:14,avs:92}},
+ side:{n:'人像漸隱',rad:14,font:'serif',shape:'square',p:{bg:'#0e1b24',sf:'#16262f',fg:'#eaf3f4',ac:'#6fd0c4'},s:{hdr:'ptside',lay:'left',av:'circle',box:'outline',lnk:'outline',lyt:'list',qa:true,bgm:'solid',gap:12,avs:92}},
+ pola:{n:'拍立得',rad:18,font:'kai',shape:'rounded',p:{bg:'#e9f0f2',sf:'#ffffff',fg:'#1e2b33',ac:'#f2705a'},s:{hdr:'ptpola',lay:'center',av:'circle',box:'shadow',lnk:'solid',lyt:'list',qa:true,bgm:'solid',gap:14,avs:92}},
+ ring:{n:'圓環人像',rad:24,font:'notosans',shape:'pill',p:{bg:'#f1f2fc',sf:'#ffffff',fg:'#181a33',ac:'#5a4df0'},s:{hdr:'ptring',lay:'center',av:'circle',box:'shadow',lnk:'fill',lyt:'grid',qa:true,bgm:'solid',gap:12,avs:92}},
  blank:{n:'空白自訂',rad:16,font:'sans',shape:'rounded',p:{bg:'#fafafa',sf:'#ffffff',fg:'#222222',ac:'#222222'},s:{hdr:'none',lay:'left',av:'circle',box:'outline',lnk:'outline',lyt:'list',qa:false,bgm:'solid',gap:14,avs:84}}};
 const PRESETS=[['#f3f5f8','#ffffff','#101828','#2f5bea'],['#ffffff','#ffffff','#111111','#111111'],['#0a0c14','#151826','#eceefb','#8b93ff'],['#fdf3ee','#ffffff','#43302f','#d1647c'],['#f2f0ea','#ffffff','#1a1a1a','#b5352b'],['#f6f1e7','#fffdf8','#2a2118','#a0682b'],['#101010','#1c1c1c','#f5f5f5','#e8c468'],['#eaf4ee','#ffffff','#14302a','#1f8a63'],
  ['#e8f4fa','#ffffff','#0e2a3b','#0b8fc6'],['#f6f0ff','#ffffff','#3a2d5c','#9b72f2'],['#fff4d6','#ffffff','#1b1b1b','#ff4d2e'],['#0e0e0e','#1a1a1a','#f4efe3','#d4af37'],
@@ -292,8 +328,45 @@ const PRESETS=[['#f3f5f8','#ffffff','#101828','#2f5bea'],['#ffffff','#ffffff','#
  ['#fdf2f8','#ffffff','#4a1d3a','#db2777'],['#1a1033','#251848','#f1ebff','#a78bfa'],['#f5f5f4','#ffffff','#1c1917','#ea580c'],['#e6fffa','#ffffff','#0b3b36','#0d9488']];
 const base=k=>{const t=TPL[k];return{tpl:k,c:{...t.p},rad:t.rad,font:t.font,shape:t.shape,...t.s}};
 
+const TCATS={pt:['photo','photofull','photocard','photomag','arch','side','pola','ring'],biz:['cover','clean','luxury','tree','night','ocean'],fun:['bento','soft','retro','vivid','pastel','forest','blank']};
+const PH=h=>/^(photo|pt)/.test(h);
+/* ===== 字體：標題與內文可分開選；選到才向 Google Fonts 載入 ===== */
+const SYSF="system-ui,-apple-system,'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif";
+const FONTS={
+ sans:{n:'系統黑體',stack:SYSF},
+ notosans:{n:'思源黑體',stack:"'Noto Sans TC',"+SYSF,gf:'Noto+Sans+TC:wght@400;500;700;900'},
+ serif:{n:'思源明體',stack:"'Noto Serif TC','Songti TC',Georgia,serif",gf:'Noto+Serif+TC:wght@500;700;900'},
+ cactus:{n:'仙人掌明體',stack:"'Cactus Classical Serif','Noto Serif TC','Songti TC',serif",gf:'Cactus+Classical+Serif',w:400},
+ kai:{n:'霞鶩文楷',stack:"'LXGW WenKai TC','Kaiti TC',DFKai-SB,serif",gf:'LXGW+WenKai+TC:wght@400;700'},
+ iansui:{n:'芫荽手寫',stack:"'Iansui','Kaiti TC',serif",gf:'Iansui',w:400},
+ round:{n:'粉圓體',stack:"'Huninn','PingFang TC',sans-serif",gf:'Huninn',w:400},
+ choco:{n:'巧克力黑體',stack:"'Chocolate Classical Sans',"+SYSF,gf:'Chocolate+Classical+Sans',w:400},
+ playfair:{n:'Playfair 優雅',stack:"'Playfair Display','Noto Serif TC','Songti TC',serif",gf:'Playfair+Display:wght@500;700;900&family=Noto+Serif+TC:wght@500;700;900'},
+ montserrat:{n:'Montserrat 現代',stack:"'Montserrat','Noto Sans TC',"+SYSF,gf:'Montserrat:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;700'}};
+const FL={};
+function loadFont(k){const f=FONTS[k];if(!f||!f.gf||FL[k])return;FL[k]=1;const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+f.gf+'&display=swap';document.head.appendChild(l)}
+/* 沒上傳照片時，人像頭部顯示的示意剪影 */
+const SIL=c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.ac}"/><stop offset="1" stop-color="${c.ac}" stop-opacity=".7"/></linearGradient></defs><rect width="400" height="500" fill="url(#g)"/><circle cx="200" cy="190" r="72" fill="#fff" opacity=".34"/><path d="M60 500c0-96 62-150 140-150s140 54 140 150z" fill="#fff" opacity=".28"/></svg>`;
+function miniPt(k){
+  const t=TPL[k],p=t.p,s=t.s,rx=s.shape==='pill'?2.7:s.shape==='square'?.6:1.8;
+  const SH={ptarch:'<path d="M10 24V12a8 8 0 0 1 16 0v12z"/>',ptside:'<rect x="16" y="0" width="20" height="27"/>',ptpola:'<rect x="9.5" y="5" width="17" height="17"/>',ptring:'<circle cx="18" cy="13" r="9"/>'}[s.hdr];
+  const HP={ptarch:[18,13],ptside:[26,12],ptpola:[18,12],ptring:[18,12]}[s.hdr],NY={ptarch:27,ptside:19.5,ptpola:30.5,ptring:27}[s.hdr];
+  const id='mc'+k,[hx,hy]=HP;
+  let o=`<rect width="36" height="44" fill="${p.bg}"/><defs><clipPath id="${id}">${SH}</clipPath></defs>`;
+  const art=`<g clip-path="url(#${id})"><g fill="${p.ac}">${SH}</g><circle cx="${hx}" cy="${hy}" r="3.4" fill="#fff" opacity=".6"/><ellipse cx="${hx}" cy="${hy+9.5}" rx="7.5" ry="6" fill="#fff" opacity=".5"/></g>`;
+  if(s.hdr==='ptpola')o+=`<g transform="rotate(-4 18 14)"><rect x="7" y="2.5" width="22" height="26" fill="#fff" stroke="#000" stroke-opacity=".15" stroke-width=".4"/>${art}</g>`;
+  else o+=art;
+  if(s.hdr==='ptring')o+=`<circle cx="18" cy="13" r="10.6" fill="none" stroke="${p.ac}" stroke-width=".7"/>`;
+  if(s.hdr==='ptarch')o+=`<path d="M8 24V12a10 10 0 0 1 20 0v12" fill="none" stroke="${p.ac}" stroke-width=".6"/>`;
+  const nx=s.hdr==='ptside'?4:11;
+  o+=`<rect x="${nx}" y="${NY}" width="${s.hdr==='ptside'?11:14}" height="2.4" rx="1.2" fill="${p.fg}"/><rect x="${nx}" y="${NY+3.4}" width="${s.hdr==='ptside'?7:9}" height="1.6" rx=".8" fill="${p.fg}" opacity=".4"/>`;
+  const tl=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${s.lnk==='fill'?p.ac:s.lnk==='outline'?'none':p.sf}" stroke="${s.lnk==='outline'?p.ac:p.fg}" stroke-opacity="${s.lnk==='outline'?.6:.18}" stroke-width=".6"/>`;
+  o+=s.lyt==='grid'?tl(4,35.5,13.4,6.5)+tl(18.6,35.5,13.4,6.5):tl(4,35.5,28,3)+tl(4,39.5,28,3);
+  return`<svg viewBox="0 0 36 44">${o}</svg>`;
+}
 function mini(k){
   const t=TPL[k],p=t.p,s=t.s;
+  if(/^pt/.test(s.hdr))return miniPt(k);
   let o=`<rect width="36" height="44" fill="${p.bg}"/>`;
   if(s.bgm!=='solid')o+=`<circle cx="18" cy="0" r="18" fill="${p.ac}" opacity=".35"/>`;
   if(s.hdr==='cover')o+=`<rect width="36" height="15" fill="${p.ac}"/>`;
@@ -323,7 +396,7 @@ function mini(k){
   return`<svg viewBox="0 0 36 44">${o}</svg>`;
 }
 
-const DEF=()=>({...base('cover'),fy:50,ay:50,pbg:'',showBio:true,showCt:true,showFt:true,
+const DEF=()=>({...base('cover'),bf:'sans',fy:50,ay:50,pbg:'',showBio:true,showCt:true,showFt:true,
  name:'林小安',title:'品牌設計總監',company:'CARD STUDIO',tag:'打造數位形象與品牌頁面',
  bio:'嗨，我是小安。專注協助個人與企業建立有質感的數位名片與一頁式品牌頁面。',
  phone:'0912-345-678',email:'hello@cardstudio.design',addr:'台北市信義區忠孝東路五段 88 號',taxId:'88888888',site:'https://cardstudio.design',
@@ -337,7 +410,7 @@ const mig=o=>{o={...o};
   delete o.links;delete o.extras;
   if(Array.isArray(o.blocks)){['bio','ct','ft'].forEach(k=>{if(!o.blocks.some(b=>b.k===k))o.blocks.push({k})});if(!o.blocks.some(b=>b.k==='qa'))o.blocks.unshift({k:'qa'})}
   return o};
-const load=o=>{o=mig(o);S={...DEF(),...o};delete S.css;if(!TPL[S.tpl])S.tpl='cover';S.c={...TPL[S.tpl].p,...(o.c||{})}};
+const load=o=>{o=mig(o);S={...DEF(),...o};delete S.css;if(S.tpl==='mag')S.tpl='retro';if(!TPL[S.tpl])S.tpl='cover';if(!FONTS[S.font])S.font='sans';if(!FONTS[S.bf])S.bf='sans';S.c={...TPL[S.tpl].p,...(o.c||{})}};
 try{load(JSON.parse(store.get(KEY)||store.get('card_studio_v8')||'{}'))}catch(e){}
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -360,7 +433,8 @@ function colors(){
   r.style.setProperty('--ax',cr(c.ac,c.sf)>=3?c.ac:c.fg);
   r.style.setProperty('--r',S.rad+'px');
   r.style.setProperty('--lr',S.shape==='pill'?'999px':S.shape==='square'?'4px':Math.min(S.rad,18)+'px');
-  r.style.setProperty('--hf',S.font==='serif'?'var(--ser)':'inherit');
+  const F=FONTS[S.font]||FONTS.sans,B=FONTS[S.bf]||FONTS.sans;loadFont(S.font);loadFont(S.bf);
+  r.style.setProperty('--hf',F.stack);r.style.setProperty('--hw',F.w||700);r.style.setProperty('--bf',B.stack);
   r.style.setProperty('--fy',S.fy+'%');
   r.style.setProperty('--gap',S.gap+'px');
   r.style.setProperty('--avs',S.avs+'px');
@@ -389,7 +463,7 @@ function render(){
   colors();
   document.title=(S.name||'數位名片')+' 的數位名片';
   const av=S.avatar?`<img src="${esc(S.avatar)}" style="object-position:50% ${+S.ay}%" alt="">`:esc((S.name||'?').trim()[0]||'?');
-  const cv=`<div class="cv" style="background-image:url('${esc(/^photo/.test(S.hdr)?(S.bg||S.avatar||coverUrl()):coverUrl())}')"></div>`;
+  const cv=`<div class="cv" style="background-image:url('${esc(PH(S.hdr)?(S.bg||S.avatar||art('s'+S.c.ac,()=>SIL(S.c))):coverUrl())}')"></div>`;
   const ct=[S.phone&&`<a href="tel:${esc(S.phone)}">${ico(P.ph)}<span>${esc(S.phone)}</span></a>`,S.email&&`<a href="mailto:${esc(S.email)}">${ico(P.ml)}<span>${esc(S.email)}</span></a>`,S.site&&`<a href="${esc(href({url:S.site}))}" target="_blank" rel="noopener">${ico(P.gl)}<span>${esc(S.site.replace(/^https?:\/\//,''))}</span></a>`,S.addr&&`<div>${ico(P.mp)}<span>${esc(S.addr)}</span></div>`].filter(Boolean).join('');
   const qa=[S.phone&&['通話','tel:'+S.phone,P.ph],S.email&&['郵件','mailto:'+S.email,P.ml],S.addr&&['導航','https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(S.addr),P.mp],S.site&&['網站',href({url:S.site}),P.gl]].filter(Boolean);
   $('#card').innerHTML=`
@@ -500,7 +574,11 @@ const IC={
   band:FR+'<path d="M7 6.5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3V15q0 2-2 2H9q-2 0-2-2z" fill="currentColor" opacity=".3" stroke="none"/><circle cx="16" cy="10" r="2.6"/><path d="M12 22h8"/>',
   photo:FR+'<path d="M7 6.5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3V20H7z" fill="currentColor" opacity=".3" stroke="none"/><circle cx="16" cy="11" r="3"/><path d="M10 20q0-5 6-5t6 5M10.5 23.5h6"/>',
   photoc:FR+'<rect x="9.5" y="6" width="13" height="14" rx="3" fill="currentColor" opacity=".3" stroke="none"/><circle cx="16" cy="12" r="2.6"/><path d="M12 24h8"/>',
-  photofull:FR+'<path d="M7 6.5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3V25H7z" fill="currentColor" opacity=".3" stroke="none"/><circle cx="16" cy="12" r="3.2"/><path d="M11 25q0-6 5-6t5 6"/>'},
+  photofull:FR+'<path d="M7 6.5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3V25H7z" fill="currentColor" opacity=".3" stroke="none"/><circle cx="16" cy="12" r="3.2"/><path d="M11 25q0-6 5-6t5 6"/>',
+  ptarch:FR+'<path d="M11 16v-5a5 5 0 0 1 10 0v5z" fill="currentColor" opacity=".3"/><path d="M12 21h8M14 24.5h4"/>',
+  ptside:FR+'<path d="M15 3.5h7a3 3 0 0 1 3 3V25H15z" fill="currentColor" opacity=".3" stroke="none"/><path d="M10 20h4M10 23.5h3"/>',
+  ptpola:FR+'<g transform="rotate(-6 16 14)"><rect x="10.5" y="7" width="11" height="14" rx="1"/><rect x="12" y="8.5" width="8" height="8" fill="currentColor" opacity=".3" stroke="none"/></g><path d="M12.5 25h7"/>',
+  ptring:FR+'<circle cx="16" cy="13" r="5.5"/><circle cx="16" cy="13" r="3.2" fill="currentColor" opacity=".3" stroke="none"/><path d="M12 23.5h8"/>'},
  lay:{left:'<circle cx="9" cy="12" r="3.5"/><path d="M16 10h10M16 14h7M5 22h22M5 26h16"/>',center:'<circle cx="16" cy="9" r="3.5"/><path d="M10 17h12M12 21h8M5 27h22"/>',right:'<circle cx="23" cy="12" r="3.5"/><path d="M6 10h10M9 14h7M5 22h22M11 26h16"/>'},
  av:{circle:'<circle cx="16" cy="16" r="9"/>',rounded:'<rect x="7" y="7" width="18" height="18" rx="6"/>',square:'<rect x="7" y="7" width="18" height="18" rx="1.5"/>',blob:'<path d="M8 15c0-5.5 5-8 9.5-6s6.5 6.5 4.5 10.5-8.5 6.5-12 3.5S8 19 8 15z"/>'},
  lnk:{solid:'<rect x="4" y="9" width="24" height="14" rx="4" fill="currentColor" opacity=".16"/><path d="M9 16h9"/>',fill:'<rect x="4" y="9" width="24" height="14" rx="4" fill="currentColor"/><path d="M9 16h9" stroke="#fff"/>',outline:'<rect x="4.5" y="9.5" width="23" height="13" rx="4"/><path d="M9 16h9"/>',glass:'<rect x="4.5" y="9.5" width="23" height="13" rx="4" fill="currentColor" opacity=".08"/><path d="M6 22 15 10M13 22l9-12" opacity=".35"/><path d="M9 16h9"/>'},
@@ -511,10 +589,11 @@ const IC={
  font:{sans:'<text x="16" y="22" font-size="16" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="system-ui,sans-serif">Aa</text>',serif:'<text x="16" y="22" font-size="16" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="Georgia,serif">Aa</text>'}
 };
 const svgi=(g,k)=>`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${IC[g][k]}</svg>`;
-let acc={0:'brand',2:'hdr'},xb=-1;
+let acc={0:'brand',2:'hdr'},xb=-1,tcat='all';
 
 function form(){
   const st=$('#form').scrollTop;
+  if(tab===2&&acc[2]==='txt')Object.keys(FONTS).forEach(loadFont);
   $('#seg').innerHTML=['內容','版型','設計','帳號'].map((x,i)=>`<button data-tab="${i}" class="${tab===i?'on':''}">${x}</button>`).join('');
   const inp=(l,p,v,t='text')=>`<label>${l}<input type="${t}" data-p="${p}" value="${esc(v)}"></label>`;
   const img=(l,p,v)=>`<div class="imgf"><label>${l}<input type="file" accept="image/*" data-img="${p}"></label>${v?`<div class="thr"><img class="th" src="${esc(v)}" alt=""><button class="gb" data-rm="${p}">移除圖片</button></div>`:''}</div>`;
@@ -525,11 +604,12 @@ function form(){
   const colr=(l,k)=>`<label class="clr"><span class="sw2" style="background:${S.c[k]}"></span><span class="cn">${l}<small>${S.c[k].toUpperCase()}</small></span><em>點擊更改</em><input type="color" data-c="${k}" value="${S.c[k]}"></label>`;
   const sec=(t,hint)=>`<h4>${t}</h4>${hint?`<p class="hint">${hint}</p>`:''}`;
   const sl=t=>`<p class="sl">${t}</p>`;
-  const photo=/^photo/.test(S.hdr);
+  const fpick=k=>`<div class="chs c2">${Object.entries(FONTS).map(([v,f])=>`<button class="ch fnt${S[k]===v?' on':''}" data-o="${k}|${v}" aria-pressed="${S[k]===v}"><b style="font-family:${f.stack};font-weight:${f.w||700}">名片 Aa</b><span>${f.n}</span></button>`).join('')}</div>`;
+  const photo=PH(S.hdr),fixLay=/^pt/.test(S.hdr);
   const pick=(g,k,list,cols=3)=>`<div class="chs c${cols}">${list.map(([v,n])=>`<button class="ch${S[k]===v?' on':''}" data-o="${k}|${v}">${svgi(g,v)}<span>${n}</span></button>`).join('')}</div>`;
   const ac=(id,icon,title,sum,body)=>{const o=acc[tab]===id;return `<section class="ac${o?' open':''}"><button class="ach" data-ac="${tab}:${id}"><span class="aci">${icon}</span><span class="act"><b>${title}</b><small>${esc(sum)}</small></span><i class="chev"></i></button>${o?`<div class="acb">${body}</div>`:''}</section>`};
   const slot=(l,p,v,hint)=>`<div class="slot"><label class="sth">${v?`<img src="${esc(v)}" alt="">`:'<em>＋</em>'}<input type="file" accept="image/*" data-img="${p}"></label><div class="sti"><b>${l}</b><small>${hint}</small><span class="fl"><label class="gb up">${v?'更換':'上傳'}<input type="file" accept="image/*" data-img="${p}"></label>${v?`<button class="gb del" data-rm="${p}">移除</button>`:''}</span></div></div>`;
-  const LB={hdr:{none:'無頭部',cover:'封面圖',band:'色塊',photo:'照片背景',photoc:'照片卡片',photofull:'滿版照片'},lay:{left:'靠左',center:'置中',right:'靠右'},av:{circle:'圓形',rounded:'圓角',square:'方形',blob:'水滴'},bgm:{solid:'純色',gradient:'光暈',image:'背景圖'},font:{sans:'黑體',serif:'明體'},lyt:{list:'條列',grid:'磚塊'},lnk:{solid:'淺底',fill:'填滿',outline:'線框',glass:'玻璃'},shape:{rounded:'圓角',pill:'膠囊',square:'方角'},box:{solid:'實心',outline:'線框',flat:'無框',glass:'玻璃',shadow:'陰影'}};
+  const LB={hdr:{none:'無頭部',cover:'封面圖',band:'色塊',photo:'照片背景',photoc:'照片卡片',photofull:'滿版照片',ptarch:'拱形人像',ptside:'側邊人像',ptpola:'拍立得',ptring:'圓環人像'},lay:{left:'靠左',center:'置中',right:'靠右'},av:{circle:'圓形',rounded:'圓角',square:'方形',blob:'水滴'},bgm:{solid:'純色',gradient:'光暈',image:'背景圖'},font:{sans:'黑體',serif:'明體'},lyt:{list:'條列',grid:'磚塊'},lnk:{solid:'淺底',fill:'填滿',outline:'線框',glass:'玻璃'},shape:{rounded:'圓角',pill:'膠囊',square:'方角'},box:{solid:'實心',outline:'線框',flat:'無框',glass:'玻璃',shadow:'陰影'}};
   const mv=i=>`<button class="mb" data-bm="${i},-1"${i===0?' disabled':''} aria-label="上移">↑</button><button class="mb" data-bm="${i},1"${i===S.blocks.length-1?' disabled':''} aria-label="下移">↓</button>`;
   const rowB=(b,i)=>{
     const sysM={bio:['簡','個人簡介','showBio','內容在「基本資料」填寫'],ct:['聯','聯絡資訊','showCt','內容在「聯絡資訊」填寫'],qa:['快','快捷按鈕列','qa','通話／郵件／導航／網站，自動產生'],ft:['尾','頁尾資訊','showFt','LOGO、公司、統編']}[b.k];
@@ -541,28 +621,33 @@ function form(){
   let h='';
   if(tab===0){
     const brandSum=[S.avatar&&'頭像',S.logo&&'LOGO',S.bg&&'封面／照片',S.pbg&&'背景圖'].filter(Boolean).join('・')||'尚未上傳圖片';
-    h=ac('brand','🖼️','品牌形象',brandSum,`<div class="slots">${slot('頭像','avatar',S.avatar,'人像或個人照')}${slot('品牌 LOGO','logo',S.logo,'顯示在名片頁尾')}${slot('封面／照片背景','bg',S.bg,'封面圖、照片背景頭部使用')}${slot('頁面背景圖','pbg',S.pbg,'選填，鋪滿整個頁面')}</div>
+    h=ac('brand','🖼️','品牌形象',brandSum,`<div class="slots">${slot('頭像','avatar',S.avatar,'人像或個人照')}${slot('品牌 LOGO','logo',S.logo,'顯示在名片頁尾')}${slot('封面／照片背景','bg',S.bg,'人像頭部優先使用此圖')}${slot('頁面背景圖','pbg',S.pbg,'選填，鋪滿整個頁面')}</div>
     ${S.avatar?rng('頭像上下位置','ay',S.ay):''}${S.bg||(photo&&S.avatar)?rng('照片上下位置（調整臉的位置）','fy',S.fy):''}`)
     +ac('info','📝','基本資料',[S.name,S.title].filter(Boolean).join(' · ')||'尚未填寫',`${inp('姓名','name',S.name)}${inp('職稱','title',S.title)}${inp('公司／品牌','company',S.company)}${inp('一句話簡介','tag',S.tag)}<label>個人簡介<textarea data-p="bio">${esc(S.bio)}</textarea></label>`)
     +ac('contact','📞','聯絡資訊',[S.phone,S.email,S.site].filter(Boolean).join(' · ')||'尚未填寫',`${inp('電話','phone',S.phone)}${inp('Email','email',S.email)}${inp('地址','addr',S.addr)}${inp('統一編號','taxId',S.taxId)}${inp('網站','site',S.site,'url')}`)
     +ac('blocks','🧩','頁面內容順序',`${S.blocks.length} 個區塊・用 ↑↓ 排序，點一下展開編輯`,`${S.blocks.map(rowB).join('')}<div class="row"><button class="gb main" data-add="link">＋ 新增連結</button><button class="gb main" data-add="text">＋ 圖文區塊</button></div>`)
     +`<button class="gb del" id="cl" style="width:100%;margin-top:14px">清空所有內容</button>`;
   }
-  else if(tab===1)h=`${sec('版型','切換版型會套用該版型的配色、設計與內建背景圖；想完全自己來，選「空白自訂」再到「設計」分頁調整。')}
-  <div class="tp">${Object.entries(TPL).map(([k,v])=>`<button data-tpl="${k}" class="${S.tpl===k?'on':''}">${mini(k)}${v.n}</button>`).join('')}</div>
+  else if(tab===1){
+    const TC={all:'全部',pt:'人像',biz:'商務',fun:'創意'},lst=tcat==='all'?[...TCATS.pt,...TCATS.biz,...TCATS.fun]:TCATS[tcat];
+    h=`${sec('版型','套用後會保留你的文字內容。人像版型請到「內容」上傳照片。')}
+  <div class="tcs">${Object.entries(TC).map(([k,n])=>`<button class="tc${tcat===k?' on':''}" data-tc="${k}" aria-pressed="${tcat===k}">${n}</button>`).join('')}</div>
+  <div class="tp">${lst.map(k=>`<button data-tpl="${k}" aria-pressed="${S.tpl===k}" class="${S.tpl===k?'on':''}">${mini(k)}${TPL[k].n}</button>`).join('')}</div>
+  ${PH(S.hdr)&&!S.avatar&&!S.bg?`<div class="nt"><b>還沒有人像照片</b><span>目前顯示的是示意剪影，上傳後會自動套進這個版型。</span><button class="gb main" data-go="0:brand">上傳我的照片</button></div>`:''}
   ${sec('配色方案','一鍵套用整組顏色；想單獨改某一項，到「設計」分頁對應物件旁邊調整。')}<div class="sw">${PRESETS.map((p,i)=>`<button data-pre="${i}" class="${p[0]===S.c.bg&&p[1]===S.c.sf&&p[2]===S.c.fg&&p[3]===S.c.ac?'on':''}" aria-label="配色 ${i+1}" style="background:linear-gradient(135deg,${p[0]} 50%,${p[3]} 50%)"></button>`).join('')}</div>`;
+  }
   else if(tab===2){
-    h=ac('hdr','👤','頭部',`${LB.hdr[S.hdr]} · ${LB.lay[S.lay]}${photo?'':' · '+LB.av[S.av]+'頭像'}`,
-      `${sl('頭部樣式')}${pick('hdr','hdr',[['none','無'],['cover','封面圖'],['band','色塊'],['photo','照片背景'],['photoc','照片卡片'],['photofull','滿版照片']])}
+    h=ac('hdr','👤','頭部',`${LB.hdr[S.hdr]}${fixLay?'':' · '+LB.lay[S.lay]}${photo?'':' · '+LB.av[S.av]+'頭像'}`,
+      `${sl('一般頭部')}${pick('hdr','hdr',[['none','無'],['cover','封面圖'],['band','色塊']])}${sl('人像頭部')}${pick('hdr','hdr',[['photo','照片背景'],['photoc','照片卡片'],['photofull','滿版照片'],['ptarch','拱形人像'],['ptside','側邊人像'],['ptpola','拍立得'],['ptring','圓環人像']])}
       ${photo&&!S.bg&&!S.avatar?`<p class="hint" style="margin-top:10px;color:#c2410c">要用你的人像：請先上傳照片。</p><button class="gb" data-go="0:brand">到「內容」上傳照片</button>`:''}
-      ${sl('文字排版')}${pick('lay','lay',[['left','靠左'],['center','置中'],['right','靠右']])}
+      ${fixLay?'':`${sl('文字排版')}${pick('lay','lay',[['left','靠左'],['center','置中'],['right','靠右']])}`}
       ${photo?'':`${sl('頭像形狀')}${pick('av','av',[['circle','圓形'],['rounded','圓角'],['square','方形'],['blob','水滴']],4)}${rng('頭像大小','avs',S.avs,56,140)}`}`)
     +ac('bg','🌄','頁面背景',`${LB.bgm[S.bgm]} · ${S.c.bg.toUpperCase()}`,
       `${sl('背景樣式')}${pick('bgm','bgm',[['solid','純色'],['gradient','頂部光暈'],['image','背景圖']])}
       ${sl('背景顏色')}${colr('背景色','bg')}
       <p class="hint" style="margin:10px 0 8px">背景圖預設用範本內建圖案，會跟著配色變化。${S.pbg?'目前使用你上傳的圖。':''}</p><button class="gb" data-go="0:brand">${S.pbg?'更換':'上傳'}自訂背景圖</button>`)
-    +ac('txt','🔤','文字',`${LB.font[S.font]} · ${S.c.fg.toUpperCase()}`,
-      `${sl('標題字體')}${pick('font','font',[['sans','黑體'],['serif','明體']],2)}${sl('文字顏色')}${colr('文字色','fg')}`)
+    +ac('txt','🔤','文字',`標題 ${FONTS[S.font].n}・內文 ${FONTS[S.bf].n}`,
+      `${sl('標題字體（姓名、區塊標題）')}${fpick('font')}${sl('內文字體')}${fpick('bf')}<p class="hint" style="margin-top:10px">字體會在選用時才載入，需連網；離線時自動改用系統字體。</p>${sl('文字顏色')}${colr('文字色','fg')}`)
     +ac('lnk','🔗','連結與按鈕',`${LB.lyt[S.lyt]} · ${LB.lnk[S.lnk]} · ${LB.shape[S.shape]}`,
       `${sl('連結排列')}${pick('lyt','lyt',[['list','條列'],['grid','磚塊（兩欄）']],2)}${sl('按鈕樣式')}${pick('lnk','lnk',[['solid','淺底'],['fill','主色填滿'],['outline','線框'],['glass','玻璃']],4)}${sl('按鈕形狀')}${pick('shape','shape',[['rounded','圓角'],['pill','膠囊'],['square','方角']])}${sl('主題色（按鈕、重點）')}${colr('主題色','ac')}`)
     +ac('box','▦','內容區塊',`${LB.box[S.box]} · 圓角 ${S.rad}`,
@@ -604,12 +689,13 @@ document.addEventListener('input',e=>{
 $('#sheet').addEventListener('click',async e=>{
   const b=e.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.tab!==undefined){tab=+d.tab;form();$('#form').scrollTop=0;return}
+  if(d.tc){tcat=d.tc;form();return}
   if(d.ac){const[t,id]=d.ac.split(':');acc[t]=acc[t]===id?'':id;form();const el=$('#form [data-ac="'+d.ac+'"]');if(el&&acc[t])el.scrollIntoView({block:'start'});return}
   if(d.bx!==undefined){xb=xb===+d.bx?-1:+d.bx;form();return}
   if(d.go){const[t,id]=d.go.split(':');tab=+t;acc[t]=id;form();$('#form').scrollTop=0;return}
   if(b.id==='bk'){download((S.name||'card')+'-備份.json',JSON.stringify(S),'application/json');toast('已下載備份檔');return}
   if(b.id==='cp'){viewChangePw();return}
-    if(d.tpl){Object.assign(S,base(d.tpl));S.pbg=''}
+    if(d.tpl){Object.assign(S,base(d.tpl));S.pbg='';toast('已套用「'+TPL[d.tpl].n+'」'+(PH(S.hdr)&&!S.avatar&&!S.bg?'，上傳照片就會看到人像':''),2600)}
   if(d.pre){const p=PRESETS[+d.pre];S.c={bg:p[0],sf:p[1],fg:p[2],ac:p[3]}}
   if(d.o){const[k,v]=d.o.split('|');S[k]=v}
   if(d.tg)S[d.tg]=!S[d.tg];
